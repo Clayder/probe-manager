@@ -38,10 +38,7 @@ public class PlanetController {
 	@PostMapping
     public ResponseEntity<PlanetDTO> register(@RequestBody PlanetDTO planetDto) {
 		IPlanetEntity planet = modelMapper.map(planetDto, PlanetEntity.class);
-		List<IProbeEntity> probeEntities = probeService.landProbes(planet);
-		planet.setProbes(probeEntities);
-
-		return ResponseEntity.ok(modelMapper.map(planet, PlanetDTO.class));
+		return ResponseEntity.ok(modelMapper.map(this.planetService.addProbePlanet(planet), PlanetDTO.class));
     }
 
 	@GetMapping("{id}")

@@ -17,7 +17,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class ProbeEntity implements IProbeEntity {
 
-    private int id;
+    private Long id;
 
 	@NonNull
 	private int x;
@@ -28,20 +28,19 @@ public class ProbeEntity implements IProbeEntity {
 	@NonNull
 	private char direction;
 
-	private IPlanetEntity planetEntity;
-
 	@NonNull
 	private String commands;
 
-	public void applyCommandToProbe(char command) {
+	@Override
+	public void applyCommandToProbe(char command, IPlanetEntity planetEntity) {
 		switch (command) {
 			case Command.R -> turnProbeRight();
 			case Command.L -> turnProbeLeft();
-			case Command.M -> moveProbeForward();
+			case Command.M -> moveProbeForward(planetEntity);
 		}
 	}
 
-	private void moveProbeForward() {
+	private void moveProbeForward(IPlanetEntity planetEntity) {
 		int newX = this.getX();
 		int newY = this.getY();
 		switch (this.getDirection()) {

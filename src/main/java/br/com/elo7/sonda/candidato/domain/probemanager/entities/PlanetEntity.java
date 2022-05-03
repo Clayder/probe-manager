@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class PlanetEntity implements IPlanetEntity{
-    private int id;
+    private Long id;
 
 	@NonNull
 	private String name;

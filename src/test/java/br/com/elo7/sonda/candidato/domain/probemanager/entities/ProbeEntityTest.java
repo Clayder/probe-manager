@@ -16,22 +16,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProbeEntityTest {
 
 	ProbeEntity probe;
+	PlanetEntity planet;
 
 	@BeforeEach
     public void setUp() {
         this.probe = new ProbeEntity();
-		PlanetEntity planet = new PlanetEntity();
+		this.planet = new PlanetEntity();
 		planet.setHeight(5);
 		planet.setWidth(5);
-
-		this.probe.setPlanetEntity(planet);
     }
 
     @Test
 	@DisplayName("Should change probe direction from N To W when receive the command L.")
 	public void should_change_probe_direction_from_N_To_W_when_receive_the_command_L() {
 		this.probe.setDirection('N');
-		this.probe.applyCommandToProbe('L');
+		this.probe.applyCommandToProbe('L', this.planet);
 
 		assertThat('W').isEqualTo(this.probe.getDirection());
 	}
@@ -40,7 +39,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from W To S when receive the command L.")
 	public void should_change_probe_direction_from_W_To_S_when_receive_the_command_L() {
 		this.probe.setDirection('W');
-		this.probe.applyCommandToProbe('L');
+		this.probe.applyCommandToProbe('L', this.planet);
 
 		assertThat('S').isEqualTo(this.probe.getDirection());
 	}
@@ -49,7 +48,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from S To E when receive the command L.")
 	public void should_change_probe_direction_from_S_To_E_when_receive_the_command_L() {
 		this.probe.setDirection('S');
-		this.probe.applyCommandToProbe('L');
+		this.probe.applyCommandToProbe('L', this.planet);
 
 		assertThat('E').isEqualTo(this.probe.getDirection());
 	}
@@ -58,7 +57,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from E To N when receive the command L.")
 	public void should_change_probe_direction_from_E_To_N_when_receive_the_command_L() {
 		this.probe.setDirection('E');
-		this.probe.applyCommandToProbe('L');
+		this.probe.applyCommandToProbe('L', this.planet);
 
 		assertThat('N').isEqualTo(this.probe.getDirection());
 	}
@@ -67,7 +66,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from N To E when receive the command R.")
 	public void should_change_probe_direction_from_N_To_E_when_receive_the_command_R() {
 		this.probe.setDirection('N');
-		this.probe.applyCommandToProbe('R');
+		this.probe.applyCommandToProbe('R', this.planet);
 
 		assertThat('E').isEqualTo(this.probe.getDirection());
 	}
@@ -76,7 +75,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from E To S when receive the command R.")
 	public void should_change_probe_direction_from_E_To_S_when_receive_the_command_R() {
 		this.probe.setDirection('E');
-		this.probe.applyCommandToProbe('R');
+		this.probe.applyCommandToProbe('R', this.planet);
 
 		assertThat('S').isEqualTo(this.probe.getDirection());
 	}
@@ -85,7 +84,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from S To W when receive the command R.")
 	public void should_change_probe_direction_from_S_To_W_when_receive_the_command_R() {
 		this.probe.setDirection('S');
-		this.probe.applyCommandToProbe('R');
+		this.probe.applyCommandToProbe('R', this.planet);
 
 		assertThat('W').isEqualTo(this.probe.getDirection());
 	}
@@ -94,7 +93,7 @@ public class ProbeEntityTest {
 	@DisplayName("Should change probe direction from W To N when receive the command R.")
 	public void should_change_probe_direction_from_W_To_N_when_receive_the_command_R() {
 		this.probe.setDirection('W');
-		this.probe.applyCommandToProbe('R');
+		this.probe.applyCommandToProbe('R', this.planet);
 
 		assertThat('N').isEqualTo(this.probe.getDirection());
 	}
@@ -105,7 +104,7 @@ public class ProbeEntityTest {
 		this.probe.setX(1);
 		this.probe.setY(1);
 		this.probe.setDirection('N');
-		this.probe.applyCommandToProbe('M');
+		this.probe.applyCommandToProbe('M', this.planet);
 
 		assertThat(2).isEqualTo(probe.getY());
 		assertThat(1).isEqualTo(probe.getX());
@@ -118,7 +117,7 @@ public class ProbeEntityTest {
 		this.probe.setX(1);
 		this.probe.setY(1);
 		this.probe.setDirection('S');
-		this.probe.applyCommandToProbe('M');
+		this.probe.applyCommandToProbe('M', this.planet);
 
 		assertThat(0).isEqualTo(probe.getY());
 		assertThat(1).isEqualTo(probe.getX());
@@ -131,7 +130,7 @@ public class ProbeEntityTest {
 		this.probe.setX(1);
 		this.probe.setY(1);
 		this.probe.setDirection('W');
-		this.probe.applyCommandToProbe('M');
+		this.probe.applyCommandToProbe('M', this.planet);
 
 		assertThat(0).isEqualTo(probe.getX());
 		assertThat(1).isEqualTo(probe.getY());
@@ -144,7 +143,7 @@ public class ProbeEntityTest {
 		this.probe.setX(1);
 		this.probe.setY(1);
 		this.probe.setDirection('E');
-		this.probe.applyCommandToProbe('M');
+		this.probe.applyCommandToProbe('M', this.planet);
 
 		assertThat(2).isEqualTo(probe.getX());
 		assertThat(1).isEqualTo(probe.getY());
@@ -158,7 +157,7 @@ public class ProbeEntityTest {
 		this.probe.setY(5);
 		this.probe.setDirection('N');
 
-		Assertions.assertThrows(BusinessException.class, () -> this.probe.applyCommandToProbe('M'));
+		Assertions.assertThrows(BusinessException.class, () -> this.probe.applyCommandToProbe('M', this.planet));
 	}
 
 }

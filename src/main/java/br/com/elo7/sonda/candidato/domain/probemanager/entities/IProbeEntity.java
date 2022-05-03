@@ -5,9 +5,8 @@ import java.util.List;
 public interface IProbeEntity {
     String getCommands();
 
-    void applyCommandToProbe(char command);
+    void applyCommandToProbe(char command, IPlanetEntity planetEntity);
 
     void setX(int x);
 
-    void setPlanetEntity(IPlanetEntity planet);
 }

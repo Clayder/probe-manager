@@ -7,5 +7,5 @@ public interface IPlanetEntity {
     void setProbes(List<IProbeEntity> probes);
     int getWidth();
     int getHeight();
-
+    void setId(Long id);
 }

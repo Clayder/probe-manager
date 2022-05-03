@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface IPlanetEntity {
     List<IProbeEntity> getProbes();
-
     void setProbes(List<IProbeEntity> probes);
+    int getWidth();
+    int getHeight();
+
 }

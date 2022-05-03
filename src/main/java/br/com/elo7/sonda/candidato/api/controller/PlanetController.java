@@ -1,8 +1,9 @@
-package br.com.elo7.sonda.candidato.controller;
+package br.com.elo7.sonda.candidato.api.controller;
 
 import java.util.List;
 
-import br.com.elo7.sonda.candidato.constants.IConstants;
+import br.com.elo7.sonda.candidato.api.constants.IConstants;
+import br.com.elo7.sonda.candidato.api.dto.PlanetDTO;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.PlanetEntity;
@@ -13,8 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.elo7.sonda.candidato.dto.PlanetDTO;
-import br.com.elo7.sonda.candidato.service.ProbeService;
+import br.com.elo7.sonda.candidato.api.service.ProbeService;
 
 @Controller
 @RequestMapping(IConstants.Controller.Planet.SLUG_PATH)

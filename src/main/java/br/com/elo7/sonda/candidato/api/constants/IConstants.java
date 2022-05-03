@@ -1,4 +1,4 @@
-package br.com.elo7.sonda.candidato.constants;
+package br.com.elo7.sonda.candidato.api.constants;
 
 public interface IConstants {
 

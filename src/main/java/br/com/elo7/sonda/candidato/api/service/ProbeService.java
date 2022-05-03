@@ -1,4 +1,4 @@
-package br.com.elo7.sonda.candidato.service;
+package br.com.elo7.sonda.candidato.api.service;
 
 
 import java.util.List;

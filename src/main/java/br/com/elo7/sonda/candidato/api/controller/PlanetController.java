@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.elo7.sonda.candidato.api.service.ProbeService;
+import br.com.elo7.sonda.candidato.api.service.impl.ProbeService;
 
 @Controller
 @RequestMapping(IConstants.Controller.Planet.SLUG_PATH)
 public class PlanetController {
-	private final ProbeService probeService;
+	private ProbeService probeService;
 
-	private final ModelMapper modelMapper;
+	private ModelMapper modelMapper;
 
 	public PlanetController(ProbeService probeService, ModelMapper modelMapper) {
 		this.probeService = probeService;

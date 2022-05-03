@@ -1,10 +1,11 @@
-package br.com.elo7.sonda.candidato.api.service;
+package br.com.elo7.sonda.candidato.api.service.impl;
 
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
+import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProbeService {
 
+	IPlanetService planetService;
+	public ProbeService(IPlanetService planetService) {
+		this.planetService = planetService;
+	}
+
 	public List<IProbeEntity> landProbes(IPlanetEntity planet) {
-		List<IProbeEntity> probeEntities = planet.getProbes();
-		return convertAndMoveProbes(planet, probeEntities);
+		List<IProbeEntity> probeEntityList = convertAndMoveProbes(planet, planet.getProbes());
+		planetService.insert(planet);
+		return probeEntityList;
 	}
 
 	private List<IProbeEntity> convertAndMoveProbes(IPlanetEntity planet, List<IProbeEntity> probeEntities) {

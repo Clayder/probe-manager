@@ -4,15 +4,15 @@ import java.util.List;
 
 import br.com.elo7.sonda.candidato.api.constants.IConstants;
 import br.com.elo7.sonda.candidato.api.dto.PlanetDTO;
+import br.com.elo7.sonda.candidato.api.model.Planet;
+import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.PlanetEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.elo7.sonda.candidato.api.service.impl.ProbeService;
 
@@ -21,10 +21,17 @@ import br.com.elo7.sonda.candidato.api.service.impl.ProbeService;
 public class PlanetController {
 	private ProbeService probeService;
 
+	private IPlanetService planetService;
+
 	private ModelMapper modelMapper;
 
-	public PlanetController(ProbeService probeService, ModelMapper modelMapper) {
+	public PlanetController(
+			ProbeService probeService,
+			ModelMapper modelMapper,
+			IPlanetService planetService
+	) {
 		this.probeService = probeService;
+		this.planetService = planetService;
 		this.modelMapper = modelMapper;
 	}
 
@@ -34,7 +41,12 @@ public class PlanetController {
 		List<IProbeEntity> probeEntities = probeService.landProbes(planet);
 		planet.setProbes(probeEntities);
 
-		PlanetDTO newPlanetDto = modelMapper.map(planet, PlanetDTO.class);
-		return ResponseEntity.ok(newPlanetDto);
+		return ResponseEntity.ok(modelMapper.map(planet, PlanetDTO.class));
+    }
+
+	@GetMapping("{id}")
+    public ResponseEntity<PlanetDTO> get(@PathVariable Long id) {
+		Planet planet = this.planetService.getById(id);
+		return ResponseEntity.ok(modelMapper.map(planet, PlanetDTO.class));
     }
 }

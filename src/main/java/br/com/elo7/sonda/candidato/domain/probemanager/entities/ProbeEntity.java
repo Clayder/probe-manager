@@ -1,5 +1,7 @@
 package br.com.elo7.sonda.candidato.domain.probemanager.entities;
 
+import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Command;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Direction;
 import lombok.Getter;
@@ -47,6 +49,12 @@ public class ProbeEntity implements IProbeEntity {
 			case Direction.W -> newX--;
 			case Direction.S -> newY--;
 			case Direction.E -> newX++;
+		}
+
+		if ((newX > planetEntity.getWidth() || newX < 0) || (newY > planetEntity.getHeight() || newY < 0)) {
+			throw new BusinessException(ErrorMessage.PROBE_CANNOT_LEAVE_PLANET +
+					" newX: %s ".formatted(newX) +
+					"newY: %s".formatted(newY));
 		}
 		this.setX(newX);
 		this.setY(newY);

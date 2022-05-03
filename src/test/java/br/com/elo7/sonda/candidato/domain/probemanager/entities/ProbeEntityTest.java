@@ -1,5 +1,7 @@
 package br.com.elo7.sonda.candidato.domain.probemanager.entities;
 
+import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -149,5 +151,14 @@ public class ProbeEntityTest {
 		assertThat('E').isEqualTo(probe.getDirection());
 	}
 
+	@Test
+	@DisplayName("Execute exception when crossing the limits of the planet.")
+	public void execute_exception_when_crossing_the_limits_of_the_planet() {
+		this.probe.setX(5);
+		this.probe.setY(5);
+		this.probe.setDirection('N');
+
+		Assertions.assertThrows(BusinessException.class, () -> this.probe.applyCommandToProbe('M'));
+	}
 
 }

@@ -2,6 +2,7 @@ package br.com.elo7.sonda.candidato.controller;
 
 import java.util.List;
 
+import br.com.elo7.sonda.candidato.constants.IConstants;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.PlanetEntity;
@@ -16,13 +17,13 @@ import br.com.elo7.sonda.candidato.dto.PlanetDTO;
 import br.com.elo7.sonda.candidato.service.ProbeService;
 
 @Controller
-@RequestMapping("/planet-with-probes")
-public class PlanetAndProbeController {
+@RequestMapping(IConstants.Controller.Planet.SLUG_PATH)
+public class PlanetController {
 	private final ProbeService probeService;
 
 	private final ModelMapper modelMapper;
 
-	public PlanetAndProbeController(ProbeService probeService, ModelMapper modelMapper) {
+	public PlanetController(ProbeService probeService, ModelMapper modelMapper) {
 		this.probeService = probeService;
 		this.modelMapper = modelMapper;
 	}

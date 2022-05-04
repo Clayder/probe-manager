@@ -9,6 +9,9 @@ import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -32,7 +35,6 @@ public class PlanetService implements IPlanetService {
     /**
      * Add probe on planet
      */
-
     public Planet addProbePlanet(IPlanetEntity planetEntity) {
         Planet planetModel = this.insert(planetEntity);
         List<Probe> Probes = this.probeService.convertAndMoveProbes(
@@ -86,5 +88,19 @@ public class PlanetService implements IPlanetService {
         planet.setDeletedAt(timestamp);
         this.planetRepository.save(planet);
     }
+
+    /**
+	 *
+	 * @param page Page number. Starting at 0
+	 * @param limitPerPage Maximum number of records per page.
+	 * @param orderBy
+	 * @param
+	 * @return
+	 */
+    @Override
+	public Page<Planet> findPage(Integer page, Integer limitPerPage, String orderBy, String sort){
+		PageRequest pageRequest = PageRequest.of(page, limitPerPage, Sort.Direction.valueOf(sort), orderBy);
+		return planetRepository.findAll(pageRequest);
+	}
 
 }

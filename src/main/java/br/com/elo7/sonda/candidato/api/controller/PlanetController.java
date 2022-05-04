@@ -9,6 +9,10 @@ import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.PlanetEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -60,4 +64,15 @@ public class PlanetController {
     public void delete(@PathVariable Long id) {
         this.planetService.delete(id);
     }
+
+	@GetMapping()
+	public ResponseEntity<Page<Planet>> getAll(
+			@RequestParam(value="page", defaultValue = "0") Integer page,
+			@RequestParam(value="limitPerPage", defaultValue = "10") Integer limitPerPage,
+			@RequestParam(value="orderBy", defaultValue = "name")String orderBy,
+			@RequestParam(value="sort", defaultValue = "ASC") String sort) {
+
+		Page<Planet> list = this.planetService.findPage(page, limitPerPage, orderBy, sort);
+		return ResponseEntity.ok().body(list);
+	}
 }

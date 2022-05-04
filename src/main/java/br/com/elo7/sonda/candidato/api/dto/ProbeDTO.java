@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProbeDTO {
+	private Long id;
 	private int x; 
 	private int y;
 	private char direction;

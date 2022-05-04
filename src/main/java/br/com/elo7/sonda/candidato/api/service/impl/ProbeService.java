@@ -32,7 +32,7 @@ public class ProbeService implements IProbeService {
 						probeEntity -> {
 							moveProbeWithAllCommands(probeEntity, planetEntity);
 							Probe probeModel = this.insert(probeEntity, planetModel);
-							probeModel.setId(probeModel.getId());
+							probeEntity.setId(probeModel.getId());
 							return probeEntity;
 						}
 				).collect(Collectors.toList());

@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanetDTO {
+	private Long id;
 	private String name;
 	private int width;
 	private int height;

@@ -37,9 +37,8 @@ public class PlanetService implements IPlanetService {
         List<IProbeEntity> probeEntityList = this.probeService.convertAndMoveProbes(
                 planetEntity, planetModel
         );
-        planetModel.setProbes(this.probeService.convertListIProbeEntyToListProbe(probeEntityList));
-        planetRepository.save(planetModel);
-
+        planetEntity.setId(planetModel.getId());
+        planetEntity.setProbes(probeEntityList);
 		return planetEntity;
 	}
 

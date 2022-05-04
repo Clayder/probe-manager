@@ -7,6 +7,7 @@ public interface ErrorMessage {
 
     String PLANET_NOT_FOUND = "Planet not found.";
     String PROBE_NOT_FOUND = "Probe not found.";
+    String DUPLICATE_PLANET = "Planet already registered.";
 
 
 }

@@ -12,4 +12,6 @@ public interface IPlanetEntity {
     int getHeight();
 
     void setId(Long id);
+
+    String getName();
 }

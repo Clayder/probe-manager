@@ -6,6 +6,7 @@ import br.com.elo7.sonda.candidato.api.repository.IPlanetRepository;
 import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.api.service.IProbeService;
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.InternalErrorException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
@@ -52,6 +53,13 @@ public class PlanetService implements IPlanetService {
     }
 
     public Planet insert(IPlanetEntity planetEntity) {
+
+        boolean existsPlanet = this.planetRepository.existsPlanetByName(planetEntity.getName());
+
+        if (existsPlanet) {
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+        }
+
         Planet planet = modelMapper.map(planetEntity, Planet.class);
         planet.setId(null);
         planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -70,6 +78,13 @@ public class PlanetService implements IPlanetService {
 
     @Override
     public Planet update(Planet planet, Long id) {
+
+        boolean existsPlanet = this.planetRepository.existsPlanetByNameAndIdNot(planet.getName(), id);
+
+        if (existsPlanet) {
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+        }
+
         Planet oldPlanet = this.getById(id);
         planet.setId(oldPlanet.getId());
         planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));

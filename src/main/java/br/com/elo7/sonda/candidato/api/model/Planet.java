@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -28,6 +25,7 @@ public class Planet extends AbstractCoreModel {
 
     @NotEmpty(message = REQUIRED_FIELD)
     @Length(min = NAME_SIZE_MIN, max = NAME_SIZE_MAX, message = NAME_LENGTH_FIELD)
+    @Column(unique=true)
     private String name;
 
     @NotNull(message = REQUIRED_FIELD)

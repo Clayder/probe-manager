@@ -8,4 +8,5 @@ public interface IPlanetService {
     Planet addProbePlanet(IPlanetEntity planet);
     Planet update(Planet planet, Long id);
     Planet updatePlanetSize(Planet planet, Long id);
+    void delete(Long id);
 }

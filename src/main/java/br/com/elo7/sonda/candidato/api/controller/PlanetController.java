@@ -9,6 +9,7 @@ import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.PlanetEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +53,11 @@ public class PlanetController {
     public ResponseEntity<PlanetSchemaDTO> patchWidthHeight(@PathVariable Long id, @RequestBody PlanetWidthHeightDTO dto) {
 		Planet planet = this.planetService.updatePlanetSize(this.modelMapper.map(dto, Planet.class), id);
 		return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
+    }
+
+	@DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        this.planetService.delete(id);
     }
 }

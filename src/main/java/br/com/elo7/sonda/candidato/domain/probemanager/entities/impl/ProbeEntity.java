@@ -1,7 +1,9 @@
-package br.com.elo7.sonda.candidato.domain.probemanager.entities;
+package br.com.elo7.sonda.candidato.domain.probemanager.entities.impl;
 
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
+import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
+import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Command;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Direction;
 import lombok.Getter;

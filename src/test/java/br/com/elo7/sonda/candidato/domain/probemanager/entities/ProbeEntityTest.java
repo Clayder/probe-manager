@@ -1,6 +1,8 @@
 package br.com.elo7.sonda.candidato.domain.probemanager.entities;
 
 import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
+import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.PlanetEntity;
+import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.ProbeEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

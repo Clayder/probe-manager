@@ -1,4 +1,4 @@
-package br.com.elo7.sonda.candidato.api.dto;
+package br.com.elo7.sonda.candidato.api.dto.planet;
 
 import br.com.elo7.sonda.candidato.core.dto.AbstractCoreDto;
 import lombok.*;

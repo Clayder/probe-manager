@@ -1,6 +1,6 @@
 package br.com.elo7.sonda.candidato.api.config;
 
-import br.com.elo7.sonda.candidato.api.dto.ProbeDTO;
+import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.factory.ProbeEntityFactory;
 import org.modelmapper.Converter;

@@ -27,6 +27,7 @@ public class ProbeService implements IProbeService {
 		this.modelMapper = modelMapper;
 	}
 
+	@Override
 	public List<Probe> convertAndMoveProbes(IPlanetEntity planetEntity, Planet planetModel) {
 		return planetEntity.getProbes()
 				.stream().map(
@@ -44,6 +45,7 @@ public class ProbeService implements IProbeService {
 		return probeRepository.save(probe);
 	}
 
+	@Override
 	public List<Probe> convertListIProbeEntyToListProbe(List<IProbeEntity> probeEntities) {
 		return modelMapper.map(probeEntities, new TypeToken<List<Probe>>() {}.getType());
 	}

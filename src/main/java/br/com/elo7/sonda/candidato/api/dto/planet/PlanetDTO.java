@@ -1,5 +1,6 @@
-package br.com.elo7.sonda.candidato.api.dto;
+package br.com.elo7.sonda.candidato.api.dto.planet;
 
+import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

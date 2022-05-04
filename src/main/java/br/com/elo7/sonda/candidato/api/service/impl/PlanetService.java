@@ -49,11 +49,13 @@ public class PlanetService implements IPlanetService {
         return planetRepository.save(planet);
     }
 
+    @Override
     public Planet getById(Long id) {
         Optional<Planet> obj = planetRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(ErrorMessage.PLANET_NOT_FOUND));
     }
 
+    @Override
     public Planet update(Planet planet, Long id) {
         Planet oldPlanet = this.getById(id);
         planet.setId(oldPlanet.getId());
@@ -61,6 +63,15 @@ public class PlanetService implements IPlanetService {
         planet.setCreatedAt(oldPlanet.getCreatedAt());
         planet.setDeletedAt(oldPlanet.getDeletedAt());
         return planetRepository.save(planet);
+    }
+
+    @Override
+    public Planet updatePlanetSize(Planet planet, Long id) {
+        Planet oldPlanet = this.getById(id);
+        oldPlanet.setHeight(planet.getHeight());
+        oldPlanet.setWidth(planet.getWidth());
+        oldPlanet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return planetRepository.save(oldPlanet);
     }
 
 }

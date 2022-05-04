@@ -7,4 +7,5 @@ public interface IPlanetService {
     Planet getById(Long id);
     Planet addProbePlanet(IPlanetEntity planet);
     Planet update(Planet planet, Long id);
+    Planet updatePlanetSize(Planet planet, Long id);
 }

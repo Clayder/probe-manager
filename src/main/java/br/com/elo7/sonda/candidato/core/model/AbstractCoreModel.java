@@ -1,4 +1,5 @@
 package br.com.elo7.sonda.candidato.core.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

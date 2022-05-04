@@ -24,20 +24,20 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @Table
 public class Planet extends AbstractCoreModel {
 
-    @NotEmpty(message= REQUIRED_FIELD)
-	@Length(min=NAME_SIZE_MIN, max=NAME_SIZE_MAX, message=NAME_LENGTH_FIELD)
+    @NotEmpty(message = REQUIRED_FIELD)
+    @Length(min = NAME_SIZE_MIN, max = NAME_SIZE_MAX, message = NAME_LENGTH_FIELD)
     private String name;
 
-    @NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
     private Integer width;
 
-    @NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
     private Integer height;
 
     @JsonBackReference
-	@OneToMany(mappedBy = "planet")
-	private List<Probe> probes = new ArrayList<>();
+    @OneToMany(mappedBy = "planet")
+    private List<Probe> probes = new ArrayList<>();
 
 }

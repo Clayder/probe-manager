@@ -4,7 +4,10 @@ import java.util.List;
 
 public interface IProbeEntity {
     String getCommands();
+
     void applyCommandToProbe(char command, IPlanetEntity planetEntity);
+
     void setX(int x);
+
     void setId(Long id);
 }

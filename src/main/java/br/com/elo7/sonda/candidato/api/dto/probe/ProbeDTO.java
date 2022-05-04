@@ -16,17 +16,17 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @AllArgsConstructor
 public class ProbeDTO extends AbstractCoreDto {
 
-	@NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
-	private int x;
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
+    private int x;
 
-	@NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
-	private int y;
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
+    private int y;
 
-	@NotEmpty(message= REQUIRED_FIELD)
-	private char direction;
+    @NotEmpty(message = REQUIRED_FIELD)
+    private char direction;
 
-	@NotEmpty(message= REQUIRED_FIELD)
-	private String commands;
+    @NotEmpty(message = REQUIRED_FIELD)
+    private String commands;
 }

@@ -22,56 +22,56 @@ import javax.validation.Valid;
 @RequestMapping(IConstants.Controller.Planet.SLUG_PATH)
 public class PlanetController {
 
-	private IPlanetService planetService;
+    private IPlanetService planetService;
 
-	private ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-	public PlanetController(
-			ModelMapper modelMapper,
-			IPlanetService planetService
-	) {
-		this.planetService = planetService;
-		this.modelMapper = modelMapper;
-	}
+    public PlanetController(
+            ModelMapper modelMapper,
+            IPlanetService planetService
+    ) {
+        this.planetService = planetService;
+        this.modelMapper = modelMapper;
+    }
 
-	@PostMapping
+    @PostMapping
     public ResponseEntity<PlanetDTO> register(@RequestBody PlanetDTO planetDto) {
-		IPlanetEntity planet = modelMapper.map(planetDto, PlanetEntity.class);
-		return ResponseEntity.ok(modelMapper.map(this.planetService.addProbePlanet(planet), PlanetDTO.class));
+        IPlanetEntity planet = modelMapper.map(planetDto, PlanetEntity.class);
+        return ResponseEntity.ok(modelMapper.map(this.planetService.addProbePlanet(planet), PlanetDTO.class));
     }
 
-	@GetMapping("{id}")
+    @GetMapping("{id}")
     public ResponseEntity<PlanetDTO> get(@PathVariable Long id) {
-		Planet planet = this.planetService.getById(id);
-		return ResponseEntity.ok(modelMapper.map(planet, PlanetDTO.class));
+        Planet planet = this.planetService.getById(id);
+        return ResponseEntity.ok(modelMapper.map(planet, PlanetDTO.class));
     }
 
-	@PutMapping("{id}")
+    @PutMapping("{id}")
     public ResponseEntity<PlanetSchemaDTO> update(@PathVariable Long id, @Valid @RequestBody PlanetSchemaDTO planetDto) {
-		Planet planet = this.planetService.update(this.modelMapper.map(planetDto, Planet.class), id);
-		return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
+        Planet planet = this.planetService.update(this.modelMapper.map(planetDto, Planet.class), id);
+        return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
     }
 
-	@PatchMapping("{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<PlanetSchemaDTO> patchWidthHeight(@PathVariable Long id, @RequestBody PlanetWidthHeightDTO dto) {
-		Planet planet = this.planetService.updatePlanetSize(this.modelMapper.map(dto, Planet.class), id);
-		return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
+        Planet planet = this.planetService.updatePlanetSize(this.modelMapper.map(dto, Planet.class), id);
+        return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
     }
 
-	@DeleteMapping("{id}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         this.planetService.delete(id);
     }
 
-	@GetMapping()
-	public ResponseEntity<Page<Planet>> getAll(
-			@RequestParam(value="page", defaultValue = "0") Integer page,
-			@RequestParam(value="limitPerPage", defaultValue = "10") Integer limitPerPage,
-			@RequestParam(value="orderBy", defaultValue = "name")String orderBy,
-			@RequestParam(value="sort", defaultValue = "ASC") String sort) {
+    @GetMapping()
+    public ResponseEntity<Page<Planet>> getAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limitPerPage", defaultValue = "10") Integer limitPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
+            @RequestParam(value = "sort", defaultValue = "ASC") String sort) {
 
-		Page<Planet> list = this.planetService.findPage(page, limitPerPage, orderBy, sort);
-		return ResponseEntity.ok().body(list);
-	}
+        Page<Planet> list = this.planetService.findPage(page, limitPerPage, orderBy, sort);
+        return ResponseEntity.ok().body(list);
+    }
 }

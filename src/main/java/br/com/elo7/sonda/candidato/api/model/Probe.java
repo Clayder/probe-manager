@@ -23,19 +23,19 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @Table
 public class Probe extends AbstractCoreModel {
 
-    @NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
     private Integer x;
 
-    @NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
     private Integer y;
 
-    @NotEmpty(message= REQUIRED_FIELD)
+    @NotEmpty(message = REQUIRED_FIELD)
     private char direction;
 
     @ManyToOne
-	@JoinColumn(name="planet_id")
-	private Planet planet;
+    @JoinColumn(name = "planet_id")
+    private Planet planet;
 
 }

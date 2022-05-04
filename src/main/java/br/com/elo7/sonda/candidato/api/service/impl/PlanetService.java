@@ -44,7 +44,7 @@ public class PlanetService implements IPlanetService {
         );
         planetModel.setProbes(Probes);
         return planetModel;
-	}
+    }
 
     public Planet insert(IPlanetEntity planetEntity) {
         try {
@@ -52,7 +52,7 @@ public class PlanetService implements IPlanetService {
             planet.setId(null);
             planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             return planetRepository.save(planet);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new InternalErrorException(e.getMessage(), e.getCause());
         }
     }
@@ -76,7 +76,7 @@ public class PlanetService implements IPlanetService {
             planet.setCreatedAt(oldPlanet.getCreatedAt());
             planet.setDeletedAt(oldPlanet.getDeletedAt());
             return planetRepository.save(planet);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new InternalErrorException(e.getMessage(), e.getCause());
         }
     }
@@ -89,7 +89,7 @@ public class PlanetService implements IPlanetService {
             oldPlanet.setWidth(planet.getWidth());
             oldPlanet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             return planetRepository.save(oldPlanet);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new InternalErrorException(e.getMessage(), e.getCause());
         }
     }
@@ -102,23 +102,22 @@ public class PlanetService implements IPlanetService {
             planet.setUpdatedAt(timestamp);
             planet.setDeletedAt(timestamp);
             this.planetRepository.save(planet);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new InternalErrorException(e.getMessage(), e.getCause());
         }
     }
 
     /**
-	 *
-	 * @param page Page number. Starting at 0
-	 * @param limitPerPage Maximum number of records per page.
-	 * @param orderBy
-	 * @param
-	 * @return
-	 */
+     * @param page         Page number. Starting at 0
+     * @param limitPerPage Maximum number of records per page.
+     * @param orderBy
+     * @param
+     * @return
+     */
     @Override
-	public Page<Planet> findPage(Integer page, Integer limitPerPage, String orderBy, String sort){
-		PageRequest pageRequest = PageRequest.of(page, limitPerPage, Sort.Direction.valueOf(sort), orderBy);
-		return planetRepository.findAll(pageRequest);
-	}
+    public Page<Planet> findPage(Integer page, Integer limitPerPage, String orderBy, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, limitPerPage, Sort.Direction.valueOf(sort), orderBy);
+        return planetRepository.findAll(pageRequest);
+    }
 
 }

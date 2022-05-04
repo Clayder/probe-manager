@@ -18,11 +18,11 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @AllArgsConstructor
 public class PlanetWidthHeightDTO extends AbstractCoreDto {
 
-    @NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
     private int width;
 
-    @NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
-	private int height;
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
+    private int height;
 }

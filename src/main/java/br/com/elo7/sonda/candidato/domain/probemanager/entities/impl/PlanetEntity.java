@@ -13,15 +13,15 @@ import java.util.List;
 public class PlanetEntity implements IPlanetEntity {
     private Long id;
 
-	@NonNull
-	private String name;
+    @NonNull
+    private String name;
 
-	@NonNull
-	private int width;
+    @NonNull
+    private int width;
 
-	@NonNull
-	private int height;
+    @NonNull
+    private int height;
 
-	@NonNull
-	List<IProbeEntity> probes;
+    @NonNull
+    List<IProbeEntity> probes;
 }

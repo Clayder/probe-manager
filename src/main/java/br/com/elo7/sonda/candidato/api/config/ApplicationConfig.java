@@ -18,10 +18,10 @@ public class ApplicationConfig {
         ModelMapper modelMapper = new ModelMapper();
 
         Converter<ProbeDTO, IProbeEntity> toUpperCase = new Converter<ProbeDTO, IProbeEntity>() {
-          public IProbeEntity convert(MappingContext<ProbeDTO, IProbeEntity> context) {
-            ProbeDTO s = context.getSource();
-            return ProbeEntityFactory.create(s.getX(), s.getY(), s.getDirection(), s.getCommands());
-          }
+            public IProbeEntity convert(MappingContext<ProbeDTO, IProbeEntity> context) {
+                ProbeDTO s = context.getSource();
+                return ProbeEntityFactory.create(s.getX(), s.getY(), s.getDirection(), s.getCommands());
+            }
         };
         modelMapper.addConverter(toUpperCase);
 

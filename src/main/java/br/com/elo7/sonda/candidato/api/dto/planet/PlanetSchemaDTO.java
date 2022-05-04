@@ -18,16 +18,16 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @AllArgsConstructor
 public class PlanetSchemaDTO extends AbstractCoreDto {
 
-	@NotEmpty(message= REQUIRED_FIELD)
-	@Length(min=NAME_SIZE_MIN, max=NAME_SIZE_MAX, message=NAME_LENGTH_FIELD)
-	private String name;
+    @NotEmpty(message = REQUIRED_FIELD)
+    @Length(min = NAME_SIZE_MIN, max = NAME_SIZE_MAX, message = NAME_LENGTH_FIELD)
+    private String name;
 
-	@NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
-	private int width;
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
+    private int width;
 
-	@NotNull(message=REQUIRED_FIELD)
-	@Min(value = 0, message = GREATER_THAN_ZERO)
-	private int height;
+    @NotNull(message = REQUIRED_FIELD)
+    @Min(value = 0, message = GREATER_THAN_ZERO)
+    private int height;
 
 }

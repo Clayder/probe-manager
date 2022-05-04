@@ -19,46 +19,47 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProbeService implements IProbeService {
 
-	private IProbeRepository probeRepository;
+    private IProbeRepository probeRepository;
 
-	private ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-	public ProbeService(IProbeRepository probeRepository, ModelMapper modelMapper) {
-		this.probeRepository = probeRepository;
-		this.modelMapper = modelMapper;
-	}
+    public ProbeService(IProbeRepository probeRepository, ModelMapper modelMapper) {
+        this.probeRepository = probeRepository;
+        this.modelMapper = modelMapper;
+    }
 
-	@Override
-	public List<Probe> convertAndMoveProbes(IPlanetEntity planetEntity, Planet planetModel) {
-		return planetEntity.getProbes()
-				.stream().map(
-						probeEntity -> {
-							moveProbeWithAllCommands(probeEntity, planetEntity);
-							return this.insert(probeEntity, planetModel);
-						}
-				).collect(Collectors.toList());
-	}
+    @Override
+    public List<Probe> convertAndMoveProbes(IPlanetEntity planetEntity, Planet planetModel) {
+        return planetEntity.getProbes()
+                .stream().map(
+                        probeEntity -> {
+                            moveProbeWithAllCommands(probeEntity, planetEntity);
+                            return this.insert(probeEntity, planetModel);
+                        }
+                ).collect(Collectors.toList());
+    }
 
-	public Probe insert(IProbeEntity probeEntity, Planet planetModel) {
-		try {
-			Probe probe = modelMapper.map(probeEntity, Probe.class);
-			probe.setPlanet(planetModel);
-			probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-			return probeRepository.save(probe);
-		} catch(Exception e) {
+    public Probe insert(IProbeEntity probeEntity, Planet planetModel) {
+        try {
+            Probe probe = modelMapper.map(probeEntity, Probe.class);
+            probe.setPlanet(planetModel);
+            probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            return probeRepository.save(probe);
+        } catch (Exception e) {
             throw new InternalErrorException(e.getMessage(), e.getCause());
         }
-	}
+    }
 
-	@Override
-	public List<Probe> convertListIProbeEntyToListProbe(List<IProbeEntity> probeEntities) {
-		return modelMapper.map(probeEntities, new TypeToken<List<Probe>>() {}.getType());
-	}
+    @Override
+    public List<Probe> convertListIProbeEntyToListProbe(List<IProbeEntity> probeEntities) {
+        return modelMapper.map(probeEntities, new TypeToken<List<Probe>>() {
+        }.getType());
+    }
 
-	private void moveProbeWithAllCommands(IProbeEntity probeEntity, IPlanetEntity planetEntity) {
-		for (char command : probeEntity.getCommands().toCharArray()) {
-			probeEntity.applyCommandToProbe(command, planetEntity);
-		}
-	}
+    private void moveProbeWithAllCommands(IProbeEntity probeEntity, IPlanetEntity planetEntity) {
+        for (char command : probeEntity.getCommands().toCharArray()) {
+            probeEntity.applyCommandToProbe(command, planetEntity);
+        }
+    }
 
 }

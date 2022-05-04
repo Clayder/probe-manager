@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanetDTO extends PlanetSchemaDTO {
-	private List<ProbeDTO> probes;
+    private List<ProbeDTO> probes;
 
 }

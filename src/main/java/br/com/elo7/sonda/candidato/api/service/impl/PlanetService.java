@@ -6,6 +6,7 @@ import br.com.elo7.sonda.candidato.api.repository.IPlanetRepository;
 import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.api.service.IProbeService;
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.InternalErrorException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -40,15 +42,19 @@ public class PlanetService implements IPlanetService {
         List<Probe> Probes = this.probeService.convertAndMoveProbes(
                 planetEntity, planetModel
         );
-       planetModel.setProbes(Probes);
-		return planetModel;
+        planetModel.setProbes(Probes);
+        return planetModel;
 	}
 
     public Planet insert(IPlanetEntity planetEntity) {
-        Planet planet = modelMapper.map(planetEntity, Planet.class);
-        planet.setId(null);
-        planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        return planetRepository.save(planet);
+        try {
+            Planet planet = modelMapper.map(planetEntity, Planet.class);
+            planet.setId(null);
+            planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            return planetRepository.save(planet);
+        } catch(Exception e) {
+            throw new InternalErrorException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
@@ -63,30 +69,42 @@ public class PlanetService implements IPlanetService {
 
     @Override
     public Planet update(Planet planet, Long id) {
-        Planet oldPlanet = this.getById(id);
-        planet.setId(oldPlanet.getId());
-        planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        planet.setCreatedAt(oldPlanet.getCreatedAt());
-        planet.setDeletedAt(oldPlanet.getDeletedAt());
-        return planetRepository.save(planet);
+        try {
+            Planet oldPlanet = this.getById(id);
+            planet.setId(oldPlanet.getId());
+            planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            planet.setCreatedAt(oldPlanet.getCreatedAt());
+            planet.setDeletedAt(oldPlanet.getDeletedAt());
+            return planetRepository.save(planet);
+        } catch(Exception e) {
+            throw new InternalErrorException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
     public Planet updatePlanetSize(Planet planet, Long id) {
-        Planet oldPlanet = this.getById(id);
-        oldPlanet.setHeight(planet.getHeight());
-        oldPlanet.setWidth(planet.getWidth());
-        oldPlanet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return planetRepository.save(oldPlanet);
+        try {
+            Planet oldPlanet = this.getById(id);
+            oldPlanet.setHeight(planet.getHeight());
+            oldPlanet.setWidth(planet.getWidth());
+            oldPlanet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            return planetRepository.save(oldPlanet);
+        } catch(Exception e) {
+            throw new InternalErrorException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
     public void delete(Long id) {
-        Planet planet = this.getById(id);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        planet.setUpdatedAt(timestamp);
-        planet.setDeletedAt(timestamp);
-        this.planetRepository.save(planet);
+        try {
+            Planet planet = this.getById(id);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            planet.setUpdatedAt(timestamp);
+            planet.setDeletedAt(timestamp);
+            this.planetRepository.save(planet);
+        } catch(Exception e) {
+            throw new InternalErrorException(e.getMessage(), e.getCause());
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package br.com.elo7.sonda.candidato.domain.exceptions.controller;
 
 import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.InternalErrorException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,15 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
+
+    @ExceptionHandler(InternalErrorException.class)
+    public ResponseEntity<StandardError> internalErrorException(InternalErrorException e, HttpServletRequest request) {
+        StandardError err = new StandardError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
     }
 }

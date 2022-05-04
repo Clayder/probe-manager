@@ -9,6 +9,7 @@ import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.api.model.Probe;
 import br.com.elo7.sonda.candidato.api.repository.IProbeRepository;
 import br.com.elo7.sonda.candidato.api.service.IProbeService;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.InternalErrorException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import org.modelmapper.ModelMapper;
@@ -39,10 +40,14 @@ public class ProbeService implements IProbeService {
 	}
 
 	public Probe insert(IProbeEntity probeEntity, Planet planetModel) {
-		Probe probe = modelMapper.map(probeEntity, Probe.class);
-		probe.setPlanet(planetModel);
-		probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		return probeRepository.save(probe);
+		try {
+			Probe probe = modelMapper.map(probeEntity, Probe.class);
+			probe.setPlanet(planetModel);
+			probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+			return probeRepository.save(probe);
+		} catch(Exception e) {
+            throw new InternalErrorException(e.getMessage(), e.getCause());
+        }
 	}
 
 	@Override

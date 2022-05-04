@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping(IConstants.Controller.Planet.SLUG_PATH)
@@ -45,7 +47,7 @@ public class PlanetController {
     }
 
 	@PutMapping("{id}")
-    public ResponseEntity<PlanetSchemaDTO> update(@PathVariable Long id, @RequestBody PlanetSchemaDTO planetDto) {
+    public ResponseEntity<PlanetSchemaDTO> update(@PathVariable Long id, @Valid @RequestBody PlanetSchemaDTO planetDto) {
 		Planet planet = this.planetService.update(this.modelMapper.map(planetDto, Planet.class), id);
 		return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
     }

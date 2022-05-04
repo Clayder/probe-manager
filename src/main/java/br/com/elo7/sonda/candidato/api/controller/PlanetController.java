@@ -4,9 +4,11 @@ import br.com.elo7.sonda.candidato.api.constants.IConstants;
 import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
 import br.com.elo7.sonda.candidato.api.dto.planet.PlanetSchemaDTO;
 import br.com.elo7.sonda.candidato.api.dto.planet.PlanetWidthHeightDTO;
+import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
 import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
+import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.PlanetEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -17,9 +19,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Planet.PATH;
+import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Planet.PLANET_POBE;
+
 
 @Controller
-@RequestMapping(IConstants.Controller.Planet.SLUG_PATH)
+@RequestMapping(PATH)
 public class PlanetController {
 
     private IPlanetService planetService;
@@ -73,5 +81,21 @@ public class PlanetController {
 
         Page<Planet> list = this.planetService.findPage(page, limitPerPage, orderBy, sort);
         return ResponseEntity.ok().body(list);
+    }
+
+    @PostMapping(PLANET_POBE)
+    public ResponseEntity<PlanetDTO> registerProbeByPlanet(
+            @PathVariable Long id,
+            @RequestBody ProbeDTO dto
+    ) {
+        List<IProbeEntity> probeList = new ArrayList<>();
+        probeList.add(modelMapper.map(dto, IProbeEntity.class));
+
+        Planet planetModel = this.planetService.getById(id);
+
+        IPlanetEntity planetEntity = modelMapper.map(planetModel, IPlanetEntity.class);
+        planetEntity.setProbes(probeList);
+
+        return ResponseEntity.ok(modelMapper.map(this.planetService.addProbeByPlanet(planetEntity, planetModel), PlanetDTO.class));
     }
 }

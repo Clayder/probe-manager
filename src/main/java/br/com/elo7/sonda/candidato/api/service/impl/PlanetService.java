@@ -39,6 +39,11 @@ public class PlanetService implements IPlanetService {
      */
     public Planet addProbePlanet(IPlanetEntity planetEntity) {
         Planet planetModel = this.insert(planetEntity);
+        return addProbeByPlanet(planetEntity, planetModel);
+    }
+
+    @Override
+    public Planet addProbeByPlanet(IPlanetEntity planetEntity, Planet planetModel) {
         List<Probe> Probes = this.probeService.convertAndMoveProbes(
                 planetEntity, planetModel
         );
@@ -47,14 +52,10 @@ public class PlanetService implements IPlanetService {
     }
 
     public Planet insert(IPlanetEntity planetEntity) {
-        try {
-            Planet planet = modelMapper.map(planetEntity, Planet.class);
-            planet.setId(null);
-            planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            return planetRepository.save(planet);
-        } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage(), e.getCause());
-        }
+        Planet planet = modelMapper.map(planetEntity, Planet.class);
+        planet.setId(null);
+        planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        return planetRepository.save(planet);
     }
 
     @Override
@@ -69,42 +70,30 @@ public class PlanetService implements IPlanetService {
 
     @Override
     public Planet update(Planet planet, Long id) {
-        try {
-            Planet oldPlanet = this.getById(id);
-            planet.setId(oldPlanet.getId());
-            planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            planet.setCreatedAt(oldPlanet.getCreatedAt());
-            planet.setDeletedAt(oldPlanet.getDeletedAt());
-            return planetRepository.save(planet);
-        } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage(), e.getCause());
-        }
+        Planet oldPlanet = this.getById(id);
+        planet.setId(oldPlanet.getId());
+        planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        planet.setCreatedAt(oldPlanet.getCreatedAt());
+        planet.setDeletedAt(oldPlanet.getDeletedAt());
+        return planetRepository.save(planet);
     }
 
     @Override
     public Planet updatePlanetSize(Planet planet, Long id) {
-        try {
-            Planet oldPlanet = this.getById(id);
-            oldPlanet.setHeight(planet.getHeight());
-            oldPlanet.setWidth(planet.getWidth());
-            oldPlanet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            return planetRepository.save(oldPlanet);
-        } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage(), e.getCause());
-        }
+        Planet oldPlanet = this.getById(id);
+        oldPlanet.setHeight(planet.getHeight());
+        oldPlanet.setWidth(planet.getWidth());
+        oldPlanet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return planetRepository.save(oldPlanet);
     }
 
     @Override
     public void delete(Long id) {
-        try {
-            Planet planet = this.getById(id);
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            planet.setUpdatedAt(timestamp);
-            planet.setDeletedAt(timestamp);
-            this.planetRepository.save(planet);
-        } catch (Exception e) {
-            throw new InternalErrorException(e.getMessage(), e.getCause());
-        }
+        Planet planet = this.getById(id);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        planet.setUpdatedAt(timestamp);
+        planet.setDeletedAt(timestamp);
+        this.planetRepository.save(planet);
     }
 
     /**

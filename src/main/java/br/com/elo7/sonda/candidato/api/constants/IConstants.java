@@ -3,10 +3,19 @@ package br.com.elo7.sonda.candidato.api.constants;
 public interface IConstants {
 
     interface Controller {
-        String PATH = "/api/v1/";
+        String VERSION = "/api/v1/";
+        String SLUG = "{id}";
 
-        public interface Planet {
-            String SLUG_PATH = PATH + "planets";
+        interface Planet {
+            String NAME = "planets";
+            String PATH = VERSION + NAME;
+            String PLANET_POBE = SLUG + "/" + Probe.NAME ;
+            String PLANET_POBE_ID = PLANET_POBE + "/{probe_id}" ;
+        }
+
+        interface Probe {
+            String NAME = "probes";
+            String PATH = VERSION + NAME;
         }
     }
 

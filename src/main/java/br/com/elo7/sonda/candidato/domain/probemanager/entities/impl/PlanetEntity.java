@@ -24,4 +24,11 @@ public class PlanetEntity implements IPlanetEntity {
 
     @NonNull
     List<IProbeEntity> probes;
+
+    public PlanetEntity(Long id, String name, int width, int height) {
+        this.id = id;
+        this.name = name;
+        this.width = width;
+        this.height = height;
+    }
 }

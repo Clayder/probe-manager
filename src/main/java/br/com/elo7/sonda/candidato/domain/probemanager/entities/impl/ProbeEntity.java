@@ -6,11 +6,7 @@ import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Command;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Direction;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Getter
@@ -32,6 +28,15 @@ public class ProbeEntity implements IProbeEntity {
 
     @NonNull
     private String commands;
+
+    @Builder
+    public ProbeEntity(Long id, int x, int y, char direction, String commands) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+        this.commands = commands;
+    }
 
     @Override
     public void applyCommandToProbe(char command, IPlanetEntity planetEntity) {

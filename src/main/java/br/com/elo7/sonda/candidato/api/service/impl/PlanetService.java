@@ -7,7 +7,6 @@ import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.api.service.IProbeService;
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
-import br.com.elo7.sonda.candidato.domain.exceptions.type.InternalErrorException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import org.modelmapper.ModelMapper;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -112,7 +110,7 @@ public class PlanetService implements IPlanetService {
     }
 
     /**
-     * @param page         Page number. Starting at 0
+     * @param page Page number. Starting at 0
      * @param limitPerPage Maximum number of records per page.
      * @param orderBy
      * @param

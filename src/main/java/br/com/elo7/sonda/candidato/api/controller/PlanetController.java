@@ -4,10 +4,10 @@ import java.util.List;
 
 import br.com.elo7.sonda.candidato.api.constants.IConstants;
 import br.com.elo7.sonda.candidato.api.dto.PlanetDTO;
+import br.com.elo7.sonda.candidato.api.dto.PlanetSchemaDTO;
 import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
-import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.PlanetEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +45,11 @@ public class PlanetController {
     public ResponseEntity<PlanetDTO> get(@PathVariable Long id) {
 		Planet planet = this.planetService.getById(id);
 		return ResponseEntity.ok(modelMapper.map(planet, PlanetDTO.class));
+    }
+
+	@PutMapping("{id}")
+    public ResponseEntity<PlanetSchemaDTO> update(@PathVariable Long id, @RequestBody PlanetSchemaDTO planetDto) {
+		Planet planet = this.planetService.update(this.modelMapper.map(planetDto, Planet.class), id);
+		return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
     }
 }

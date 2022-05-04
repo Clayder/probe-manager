@@ -5,5 +5,6 @@ import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 
 public interface IPlanetService {
     Planet getById(Long id);
-    IPlanetEntity addProbePlanet(IPlanetEntity planet);
+    Planet addProbePlanet(IPlanetEntity planet);
+    Planet update(Planet planet, Long id);
 }

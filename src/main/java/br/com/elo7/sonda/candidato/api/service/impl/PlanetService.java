@@ -8,10 +8,10 @@ import br.com.elo7.sonda.candidato.api.service.IProbeService;
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
-import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,19 +32,20 @@ public class PlanetService implements IPlanetService {
     /**
      * Add probe on planet
      */
-    public IPlanetEntity addProbePlanet(IPlanetEntity planetEntity) {
+
+    public Planet addProbePlanet(IPlanetEntity planetEntity) {
         Planet planetModel = this.insert(planetEntity);
-        List<IProbeEntity> probeEntityList = this.probeService.convertAndMoveProbes(
+        List<Probe> Probes = this.probeService.convertAndMoveProbes(
                 planetEntity, planetModel
         );
-        planetEntity.setId(planetModel.getId());
-        planetEntity.setProbes(probeEntityList);
-		return planetEntity;
+       planetModel.setProbes(Probes);
+		return planetModel;
 	}
 
     public Planet insert(IPlanetEntity planetEntity) {
         Planet planet = modelMapper.map(planetEntity, Planet.class);
         planet.setId(null);
+        planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         return planetRepository.save(planet);
     }
 
@@ -52,4 +53,14 @@ public class PlanetService implements IPlanetService {
         Optional<Planet> obj = planetRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(ErrorMessage.PLANET_NOT_FOUND));
     }
+
+    public Planet update(Planet planet, Long id) {
+        Planet oldPlanet = this.getById(id);
+        planet.setId(oldPlanet.getId());
+        planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        planet.setCreatedAt(oldPlanet.getCreatedAt());
+        planet.setDeletedAt(oldPlanet.getDeletedAt());
+        return planetRepository.save(planet);
+    }
+
 }

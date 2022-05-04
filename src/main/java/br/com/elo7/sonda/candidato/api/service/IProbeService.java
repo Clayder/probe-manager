@@ -8,7 +8,7 @@ import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import java.util.List;
 
 public interface IProbeService {
-    List<IProbeEntity> convertAndMoveProbes(
+    List<Probe> convertAndMoveProbes(
             IPlanetEntity planet,
             Planet planetModel
     );

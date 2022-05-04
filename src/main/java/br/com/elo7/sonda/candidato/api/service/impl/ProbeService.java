@@ -1,6 +1,7 @@
 package br.com.elo7.sonda.candidato.api.service.impl;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +27,12 @@ public class ProbeService implements IProbeService {
 		this.modelMapper = modelMapper;
 	}
 
-	public List<IProbeEntity> convertAndMoveProbes(IPlanetEntity planetEntity, Planet planetModel) {
+	public List<Probe> convertAndMoveProbes(IPlanetEntity planetEntity, Planet planetModel) {
 		return planetEntity.getProbes()
 				.stream().map(
 						probeEntity -> {
 							moveProbeWithAllCommands(probeEntity, planetEntity);
-							Probe probeModel = this.insert(probeEntity, planetModel);
-							probeEntity.setId(probeModel.getId());
-							return probeEntity;
+							return this.insert(probeEntity, planetModel);
 						}
 				).collect(Collectors.toList());
 	}
@@ -41,6 +40,7 @@ public class ProbeService implements IProbeService {
 	public Probe insert(IProbeEntity probeEntity, Planet planetModel) {
 		Probe probe = modelMapper.map(probeEntity, Probe.class);
 		probe.setPlanet(planetModel);
+		probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 		return probeRepository.save(probe);
 	}
 

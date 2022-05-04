@@ -1,21 +1,21 @@
-package br.com.elo7.sonda.candidato.core.model;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package br.com.elo7.sonda.candidato.core.dto;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
-public abstract class AbstractCoreModel {
+public abstract class AbstractCoreDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp deletedAt;
+
 }

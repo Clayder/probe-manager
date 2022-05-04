@@ -11,11 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlanetDTO {
-	private Long id;
-	private String name;
-	private int width;
-	private int height;
+public class PlanetDTO extends PlanetSchemaDTO {
 	private List<ProbeDTO> probes;
 
 }

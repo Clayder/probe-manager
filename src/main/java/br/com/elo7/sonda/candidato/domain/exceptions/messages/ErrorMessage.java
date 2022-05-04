@@ -6,6 +6,7 @@ public interface ErrorMessage {
     String PROBE_CANNOT_LEAVE_PLANET = "The probe cannot leave the planet.";
 
     String PLANET_NOT_FOUND = "Planet not found.";
+    String PROBE_NOT_FOUND = "Probe not found.";
 
 
 }

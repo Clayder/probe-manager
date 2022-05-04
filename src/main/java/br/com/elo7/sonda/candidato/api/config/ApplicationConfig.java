@@ -1,7 +1,10 @@
 package br.com.elo7.sonda.candidato.api.config;
 
 import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
+import br.com.elo7.sonda.candidato.api.model.Planet;
+import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
+import br.com.elo7.sonda.candidato.domain.probemanager.factory.PlanetEntityFactory;
 import br.com.elo7.sonda.candidato.domain.probemanager.factory.ProbeEntityFactory;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -24,6 +27,14 @@ public class ApplicationConfig {
             }
         };
         modelMapper.addConverter(toUpperCase);
+
+        Converter<Planet, IPlanetEntity> toUpperCase2 = new Converter<Planet, IPlanetEntity>() {
+            public IPlanetEntity convert(MappingContext<Planet, IPlanetEntity> context) {
+                Planet s = context.getSource();
+                return PlanetEntityFactory.create(s.getId(), s.getName(), s.getWidth(), s.getHeight());
+            }
+        };
+        modelMapper.addConverter(toUpperCase2);
 
         return modelMapper;
     }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StandardError  {
+public class StandardError {
 
     private Integer status;
     private String msg;

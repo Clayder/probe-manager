@@ -21,4 +21,6 @@ public interface IProbeService {
     Probe moveProbe(IProbeEntity probeEntity, IPlanetEntity planetEntity, Probe probeModel);
 
     Page<Probe> findPage(Integer page, Integer limitPerPage, String orderBy, String sort);
+
+    Probe insert(IProbeEntity probeEntity, Planet planetModel);
 }

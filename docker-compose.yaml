@@ -18,7 +18,27 @@ services:
       # Where our data will be persisted
     volumes:
       - probe-manager-db:/var/lib/mysql
+  db_test:
+    image: mysql:5.7
+    container_name: probe-manager-db-test
+    # restart: always
+    environment:
+      MYSQL_DATABASE: 'probe_manager_test'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3307:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - probe-manager-db-test:/var/lib/mysql
 # Names our volume
 volumes:
   probe-manager-db:
+    external: true
+  probe-manager-db-test:
     external: true

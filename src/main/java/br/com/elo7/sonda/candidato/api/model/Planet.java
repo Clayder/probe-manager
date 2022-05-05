@@ -5,13 +5,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class Planet extends AbstractCoreModel {
 
     @NotEmpty(message = REQUIRED_FIELD)
     @Length(min = NAME_SIZE_MIN, max = NAME_SIZE_MAX, message = NAME_LENGTH_FIELD)
+    @Column(unique=true)
     private String name;
 
     @NotNull(message = REQUIRED_FIELD)
@@ -41,4 +40,12 @@ public class Planet extends AbstractCoreModel {
     @OneToMany(mappedBy = "planet")
     private List<Probe> probes = new ArrayList<>();
 
+    @Builder
+    public Planet(Long id, Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, String name, Integer width, Integer height, List<Probe> probes) {
+        super(id, createdAt, updatedAt, deletedAt);
+        this.name = name;
+        this.width = width;
+        this.height = height;
+        this.probes = probes;
+    }
 }

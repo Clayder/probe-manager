@@ -40,7 +40,7 @@ public class ProbeController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<ProbeDTO> update(@PathVariable Long id, @Valid @RequestBody MoveProbeDTO dto) {
+    public ResponseEntity<ProbeDTO> moveProbe(@PathVariable Long id, @Valid @RequestBody MoveProbeDTO dto) {
         Probe probeModel = this.probeService.getById(id);
         IProbeEntity probeEntity = ProbeEntityFactory.create(probeModel.getX(), probeModel.getY(), probeModel.getDirection(), dto.getCommands());
 

@@ -11,6 +11,7 @@ import br.com.elo7.sonda.candidato.api.model.Probe;
 import br.com.elo7.sonda.candidato.api.repository.IProbeRepository;
 import br.com.elo7.sonda.candidato.api.service.IProbeService;
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
@@ -54,15 +55,32 @@ public class ProbeService implements IProbeService {
          probeModel.setDirection(probeEntity.getDirection());
          probeModel.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
+         checkCollision(probeEntity, probeModel.getPlanet());
+
          return this.probeRepository.save(probeModel);
 
     }
 
     public Probe insert(IProbeEntity probeEntity, Planet planetModel) {
+
+        checkCollision(probeEntity, planetModel);
+
         Probe probe = modelMapper.map(probeEntity, Probe.class);
         probe.setPlanet(planetModel);
         probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         return probeRepository.save(probe);
+    }
+
+    private void checkCollision(IProbeEntity probeEntity, Planet planetModel) {
+        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+                planetModel,
+                probeEntity.getX(),
+                probeEntity.getY()
+        );
+
+        if (isCollision) {
+            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES);
+        }
     }
 
     @Override

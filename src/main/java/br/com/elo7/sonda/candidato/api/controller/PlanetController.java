@@ -42,10 +42,17 @@ public class PlanetController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping
-    public ResponseEntity<PlanetDTO> register(@RequestBody PlanetDTO planetDto) {
+    @PostMapping(IConstants.Controller.Probe.NAME)
+    public ResponseEntity<PlanetDTO> register(@Valid @RequestBody PlanetDTO planetDto) {
         IPlanetEntity planet = modelMapper.map(planetDto, PlanetEntity.class);
         return ResponseEntity.ok(modelMapper.map(this.planetService.addProbePlanet(planet), PlanetDTO.class));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<PlanetSchemaDTO> insert(@Valid @RequestBody PlanetSchemaDTO planetDto) {
+        Planet planet = modelMapper.map(planetDto, Planet.class);
+        return new ResponseEntity(modelMapper.map(this.planetService.insert(planet), PlanetSchemaDTO.class), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
@@ -61,7 +68,7 @@ public class PlanetController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<PlanetSchemaDTO> patchWidthHeight(@PathVariable Long id, @RequestBody PlanetWidthHeightDTO dto) {
+    public ResponseEntity<PlanetSchemaDTO> patchWidthHeight(@PathVariable Long id, @Valid @RequestBody PlanetWidthHeightDTO dto) {
         Planet planet = this.planetService.updatePlanetSize(this.modelMapper.map(dto, Planet.class), id);
         return ResponseEntity.ok(modelMapper.map(planet, PlanetSchemaDTO.class));
     }
@@ -86,7 +93,7 @@ public class PlanetController {
     @PostMapping(PLANET_POBE)
     public ResponseEntity<PlanetDTO> registerProbeByPlanet(
             @PathVariable Long id,
-            @RequestBody ProbeDTO dto
+            @Valid @RequestBody ProbeDTO dto
     ) {
         List<IProbeEntity> probeList = new ArrayList<>();
         probeList.add(modelMapper.map(dto, IProbeEntity.class));

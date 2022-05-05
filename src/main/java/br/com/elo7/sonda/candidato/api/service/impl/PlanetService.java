@@ -6,7 +6,7 @@ import br.com.elo7.sonda.candidato.api.repository.IPlanetRepository;
 import br.com.elo7.sonda.candidato.api.service.IPlanetService;
 import br.com.elo7.sonda.candidato.api.service.IProbeService;
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
-import br.com.elo7.sonda.candidato.domain.exceptions.type.InternalErrorException;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import org.modelmapper.ModelMapper;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -53,10 +52,25 @@ public class PlanetService implements IPlanetService {
 
     public Planet insert(IPlanetEntity planetEntity) {
         Planet planet = modelMapper.map(planetEntity, Planet.class);
+        return insert(planet);
+    }
+
+    @Override
+    public Planet insert(Planet planet) {
+        existsPlanet(planet);
         planet.setId(null);
         planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         return planetRepository.save(planet);
     }
+
+    private void existsPlanet(Planet planet) {
+        boolean existsPlanet = this.planetRepository.existsPlanetByName(planet.getName());
+
+        if (existsPlanet) {
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+        }
+    }
+
 
     @Override
     public Planet getById(Long id) {
@@ -70,6 +84,13 @@ public class PlanetService implements IPlanetService {
 
     @Override
     public Planet update(Planet planet, Long id) {
+
+        boolean existsPlanet = this.planetRepository.existsPlanetByNameAndIdNot(planet.getName(), id);
+
+        if (existsPlanet) {
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+        }
+
         Planet oldPlanet = this.getById(id);
         planet.setId(oldPlanet.getId());
         planet.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
@@ -97,7 +118,7 @@ public class PlanetService implements IPlanetService {
     }
 
     /**
-     * @param page         Page number. Starting at 0
+     * @param page Page number. Starting at 0
      * @param limitPerPage Maximum number of records per page.
      * @param orderBy
      * @param

@@ -55,7 +55,16 @@ public class ProbeService implements IProbeService {
          probeModel.setDirection(probeEntity.getDirection());
          probeModel.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
-         checkCollision(probeEntity, probeModel.getPlanet());
+         boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(
+                probeModel.getPlanet(),
+                probeEntity.getX(),
+                probeEntity.getY(),
+                probeEntity.getId()
+        );
+
+        if (isCollision) {
+            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES);
+        }
 
          return this.probeRepository.save(probeModel);
 
@@ -78,19 +87,6 @@ public class ProbeService implements IProbeService {
         probe.setActive(true);
         probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         return probeRepository.save(probe);
-    }
-
-    private void checkCollision(IProbeEntity probeEntity, Planet planetModel) {
-        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(
-                planetModel,
-                probeEntity.getX(),
-                probeEntity.getY(),
-                probeEntity.getId()
-        );
-
-        if (isCollision) {
-            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES);
-        }
     }
 
     @Override

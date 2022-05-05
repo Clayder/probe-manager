@@ -76,6 +76,13 @@ public class ProbeRepositoryTest {
 
         assertThat(isCollision).isTrue();
 
+        boolean isCollision2 = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+                planet,
+                probe1.getX(),
+                probe1.getY()
+        );
+
+        assertThat(isCollision2).isTrue();
     }
 
 

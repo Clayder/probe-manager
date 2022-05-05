@@ -62,7 +62,7 @@ public class ProbeControllerTest {
 
         mvc
             .perform(request)
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(jsonPath("$.probes[0].id").value(probe1Id))
             .andExpect(jsonPath("$.probes[1].id").value(3));
     }

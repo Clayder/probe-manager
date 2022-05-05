@@ -12,7 +12,7 @@ public abstract class ProbeFake {
     private static final Timestamp UPDATED_AT = new Timestamp(System.currentTimeMillis());
     private static final Timestamp DELETED_AT = null;
     public static final int X = 1;
-    public static final int Y = 3;
+    public static final int Y = 2;
 
 
     public static Probe create(Planet planet) {
@@ -21,6 +21,17 @@ public abstract class ProbeFake {
                 .y(Y)
                 .direction(Direction.N)
                 .planet(planet)
+                .createdAt(CREATED_AT)
+                .updatedAt(UPDATED_AT)
+                .deletedAt(DELETED_AT)
+                .build();
+    }
+
+    public static Probe createWithoutPlanet() {
+        return Probe.builder()
+                .x(X)
+                .y(Y)
+                .direction(Direction.N)
                 .createdAt(CREATED_AT)
                 .updatedAt(UPDATED_AT)
                 .deletedAt(DELETED_AT)

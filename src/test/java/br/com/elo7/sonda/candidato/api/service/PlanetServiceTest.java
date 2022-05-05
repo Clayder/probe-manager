@@ -228,8 +228,8 @@ public class PlanetServiceTest {
     }
 
     @Test
-    @DisplayName("Add and move prove.")
-    public void addAndMoveProve() {
+    @DisplayName("Add and move probe.")
+    public void addAndMoveProbe() {
         IPlanetEntity planetEntity = PlanetEntityFake.create();
         planetEntity.setWidth(5);
         planetEntity.setHeight(5);
@@ -262,7 +262,15 @@ public class PlanetServiceTest {
          // exec
         Planet planet = service.addProbePlanet(planetEntity);
 
-        assertThat(planet).isNotNull();
+        List<IProbeEntity> probes = planetEntity.getProbes();
+        IProbeEntity newProbe1 = probes.get(0);
+        IProbeEntity newProbe2 = probes.get(1);
+
+        // assert
+        assertThat(newProbe1.getX()).isEqualTo(1);
+        assertThat(newProbe1.getY()).isEqualTo(3);
+        assertThat(newProbe2.getX()).isEqualTo(5);
+        assertThat(newProbe2.getY()).isEqualTo(1);
 
     }
 

@@ -13,15 +13,16 @@ public abstract class ProbeEntityFake {
     private static final Timestamp UPDATED_AT = new Timestamp(System.currentTimeMillis());
     private static final Timestamp DELETED_AT = null;
     public static final int X = 1;
-    public static final int Y = 3;
+    public static final int Y = 2;
     public static final String COMMANDS = "LMLMLMLMM";
 
 
     public static ProbeEntity create() {
+        Probe probe = ProbeFake.createWithoutPlanet();
         return ProbeEntity.builder()
-                .x(X)
-                .y(Y)
-                .direction(Direction.N)
+                .x(probe.getX())
+                .y(probe.getY())
+                .direction(probe.getDirection())
                 .commands(COMMANDS)
                 .build();
     }

@@ -2,6 +2,7 @@ package br.com.elo7.sonda.candidato.domain.probemanager.entities.impl;
 
 import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
 import br.com.elo7.sonda.candidato.domain.exceptions.type.BusinessException;
+import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Command;
@@ -44,6 +45,9 @@ public class ProbeEntity implements IProbeEntity {
             case Command.R -> turnProbeRight();
             case Command.L -> turnProbeLeft();
             case Command.M -> moveProbeForward(planetEntity);
+            default -> throw new BusinessException(
+                    ErrorMessage.INVALID_COMMAND + ": " + command
+            );
         }
     }
 
@@ -55,6 +59,9 @@ public class ProbeEntity implements IProbeEntity {
             case Direction.W -> newX--;
             case Direction.S -> newY--;
             case Direction.E -> newX++;
+            default -> throw new BusinessException(
+                    ErrorMessage.INVALID_DIRECTION + ": " + this.getDirection()
+            );
         }
 
         if ((newX > planetEntity.getWidth() || newX < 0) || (newY > planetEntity.getHeight() || newY < 0)) {
@@ -71,7 +78,10 @@ public class ProbeEntity implements IProbeEntity {
             case Direction.N -> Direction.W;
             case Direction.W -> Direction.S;
             case Direction.S -> Direction.E;
-            default -> Direction.N;
+            case Direction.E -> Direction.N;
+            default -> throw new BusinessException(
+                    ErrorMessage.INVALID_DIRECTION + ": " + this.getDirection()
+            );
         };
         this.setDirection(newDirection);
     }
@@ -81,7 +91,10 @@ public class ProbeEntity implements IProbeEntity {
             case Direction.N -> Direction.E;
             case Direction.E -> Direction.S;
             case Direction.S -> Direction.W;
-            default -> Direction.N;
+            case Direction.W -> Direction.N;
+            default -> throw new BusinessException(
+                    ErrorMessage.INVALID_DIRECTION + ": " + this.getDirection()
+            );
         };
         System.out.println(newDirection);
         this.setDirection(newDirection);

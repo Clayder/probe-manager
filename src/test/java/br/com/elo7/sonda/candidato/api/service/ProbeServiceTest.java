@@ -29,6 +29,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.isNull;
 
 @Import(ApplicationConfig.class)
 @ExtendWith(SpringExtension.class)
@@ -161,10 +162,11 @@ public class ProbeServiceTest {
         Probe probeSaved = ProbeFake.createWithoutPlanet();
         probeSaved.setId(1L);
 
-        Mockito.when(repository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+        Mockito.when(repository.existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(
                 Mockito.any(Planet.class),
                 Mockito.anyInt(),
-                Mockito.anyInt()
+                Mockito.anyInt(),
+                isNull()
         )).thenReturn(true);
 
         Mockito.when(repository.save(Mockito.any(Probe.class))).thenReturn(probeSaved);

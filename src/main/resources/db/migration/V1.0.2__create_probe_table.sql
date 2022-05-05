@@ -6,6 +6,7 @@ create table probe_manager.probe(
     deleted_at timestamp null,
     x int not null,
     y int not null,
+    active BOOLEAN DEFAULT true,
     planet_id bigint NOT NULL
 );
 

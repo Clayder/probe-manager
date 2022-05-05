@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IProbeRepository extends JpaRepository<Probe, Long> {
     Boolean existsProbeByPlanetAndXAndYAndDeletedAtIsNull(Planet planet, int x, int y);
+
+    Boolean existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(Planet planet, int x, int y, Long id);
 }

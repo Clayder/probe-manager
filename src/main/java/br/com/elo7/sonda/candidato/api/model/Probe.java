@@ -19,7 +19,7 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "x", "y", "planet_id" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "x", "y", "planet_id", "active"}) })
 public class Probe extends AbstractCoreModel {
 
     @NotNull(message = REQUIRED_FIELD)
@@ -33,16 +33,19 @@ public class Probe extends AbstractCoreModel {
     @NotNull(message = REQUIRED_FIELD)
     private char direction;
 
+    private boolean active;
+
     @ManyToOne()
     @JoinColumn(name = "planet_id")
     private Planet planet;
 
     @Builder
-    public Probe(Long id, Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, Integer x, Integer y, char direction, Planet planet) {
+    public Probe(Long id, Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, Integer x, Integer y, char direction, boolean active, Planet planet) {
         super(id, createdAt, updatedAt, deletedAt);
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.active = active;
         this.planet = planet;
     }
 }

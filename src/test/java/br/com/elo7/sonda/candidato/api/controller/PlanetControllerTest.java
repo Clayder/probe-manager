@@ -61,7 +61,7 @@ public class PlanetControllerTest {
 
         mvc
             .perform(request)
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(jsonPath("name").value(planetDTO.getName()))
             .andExpect(jsonPath("width").value(planetDTO.getWidth()))
             .andExpect(jsonPath("height").value(planetDTO.getHeight()))

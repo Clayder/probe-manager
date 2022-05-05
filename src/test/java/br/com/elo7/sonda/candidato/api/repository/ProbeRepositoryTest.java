@@ -67,11 +67,22 @@ public class ProbeRepositoryTest {
 
         entityManager.getEntityManager().getTransaction().commit();
 
-
-        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(planet, probe1.getX(), probe1.getY());
+        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(
+                planet,
+                probe1.getX(),
+                probe1.getY(),
+                1L
+        );
 
         assertThat(isCollision).isTrue();
 
+        boolean isCollision2 = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+                planet,
+                probe1.getX(),
+                probe1.getY()
+        );
+
+        assertThat(isCollision2).isTrue();
     }
 
 

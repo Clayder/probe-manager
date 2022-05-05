@@ -13,4 +13,5 @@ public interface IProbeEntity {
     char getDirection();
 
     void setId(Long id);
+    Long getId();
 }

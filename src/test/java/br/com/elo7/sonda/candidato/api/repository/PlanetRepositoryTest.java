@@ -1,7 +1,7 @@
 package br.com.elo7.sonda.candidato.api.repository;
 
 import br.com.elo7.sonda.candidato.api.model.Planet;
-import br.com.elo7.sonda.candidato.fakes.PlanetFake;
+import br.com.elo7.sonda.candidato.fakes.model.PlanetFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

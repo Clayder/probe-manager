@@ -1,18 +1,24 @@
 package br.com.elo7.sonda.candidato.api.dto.planet;
 
 import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.List;
+
+import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Default.REQUIRED_FIELD;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanetDTO extends PlanetSchemaDTO {
+
+    @NotEmpty(message = REQUIRED_FIELD)
     private List<ProbeDTO> probes;
 
 }

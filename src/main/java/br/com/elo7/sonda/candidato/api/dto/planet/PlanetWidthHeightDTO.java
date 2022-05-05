@@ -1,13 +1,12 @@
 package br.com.elo7.sonda.candidato.api.dto.planet;
 
 import br.com.elo7.sonda.candidato.core.dto.AbstractCoreDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import java.sql.Timestamp;
 
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Default.GREATER_THAN_ZERO;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Default.REQUIRED_FIELD;

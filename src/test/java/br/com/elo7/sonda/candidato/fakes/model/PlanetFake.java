@@ -1,4 +1,4 @@
-package br.com.elo7.sonda.candidato.fakes;
+package br.com.elo7.sonda.candidato.fakes.model;
 
 import br.com.elo7.sonda.candidato.api.model.Planet;
 

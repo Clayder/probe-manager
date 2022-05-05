@@ -1,7 +1,8 @@
-package br.com.elo7.sonda.candidato.fakes;
+package br.com.elo7.sonda.candidato.fakes.entity;
 
 import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.PlanetEntity;
+import br.com.elo7.sonda.candidato.fakes.model.PlanetFake;
 
 import java.sql.Timestamp;
 

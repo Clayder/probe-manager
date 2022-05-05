@@ -72,7 +72,7 @@ public class ProbeService implements IProbeService {
     }
 
     private void checkCollision(IProbeEntity probeEntity, Planet planetModel) {
-        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndY(
+        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
                 planetModel,
                 probeEntity.getX(),
                 probeEntity.getY()

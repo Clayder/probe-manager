@@ -51,18 +51,26 @@ public class PlanetService implements IPlanetService {
     }
 
     public Planet insert(IPlanetEntity planetEntity) {
-
-        boolean existsPlanet = this.planetRepository.existsPlanetByName(planetEntity.getName());
-
-        if (existsPlanet) {
-            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
-        }
-
         Planet planet = modelMapper.map(planetEntity, Planet.class);
+        return insert(planet);
+    }
+
+    @Override
+    public Planet insert(Planet planet) {
+        existsPlanet(planet);
         planet.setId(null);
         planet.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         return planetRepository.save(planet);
     }
+
+    private void existsPlanet(Planet planet) {
+        boolean existsPlanet = this.planetRepository.existsPlanetByName(planet.getName());
+
+        if (existsPlanet) {
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+        }
+    }
+
 
     @Override
     public Planet getById(Long id) {

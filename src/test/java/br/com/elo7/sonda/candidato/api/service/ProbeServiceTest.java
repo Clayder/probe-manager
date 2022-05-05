@@ -10,10 +10,10 @@ import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundExceptio
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IPlanetEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.IProbeEntity;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.impl.ProbeEntity;
-import br.com.elo7.sonda.candidato.fakes.PlanetEntityFake;
-import br.com.elo7.sonda.candidato.fakes.PlanetFake;
-import br.com.elo7.sonda.candidato.fakes.ProbeEntityFake;
-import br.com.elo7.sonda.candidato.fakes.ProbeFake;
+import br.com.elo7.sonda.candidato.fakes.entity.PlanetEntityFake;
+import br.com.elo7.sonda.candidato.fakes.model.PlanetFake;
+import br.com.elo7.sonda.candidato.fakes.entity.ProbeEntityFake;
+import br.com.elo7.sonda.candidato.fakes.model.ProbeFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -79,7 +79,7 @@ public class ProbeServiceTest {
         Probe probeSaved = ProbeFake.create(planetModel);
         probeSaved.setId(1L);
 
-        Mockito.when(repository.existsProbeByPlanetAndXAndY(
+        Mockito.when(repository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
                 Mockito.any(Planet.class),
                 Mockito.anyInt(),
                 Mockito.anyInt()
@@ -161,7 +161,7 @@ public class ProbeServiceTest {
         Probe probeSaved = ProbeFake.createWithoutPlanet();
         probeSaved.setId(1L);
 
-        Mockito.when(repository.existsProbeByPlanetAndXAndY(
+        Mockito.when(repository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
                 Mockito.any(Planet.class),
                 Mockito.anyInt(),
                 Mockito.anyInt()

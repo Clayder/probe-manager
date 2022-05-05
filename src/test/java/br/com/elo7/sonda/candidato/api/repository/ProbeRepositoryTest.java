@@ -2,8 +2,8 @@ package br.com.elo7.sonda.candidato.api.repository;
 
 import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.api.model.Probe;
-import br.com.elo7.sonda.candidato.fakes.PlanetFake;
-import br.com.elo7.sonda.candidato.fakes.ProbeFake;
+import br.com.elo7.sonda.candidato.fakes.model.PlanetFake;
+import br.com.elo7.sonda.candidato.fakes.model.ProbeFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,7 +68,7 @@ public class ProbeRepositoryTest {
         entityManager.getEntityManager().getTransaction().commit();
 
 
-        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndY(planet, probe1.getX(), probe1.getY());
+        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(planet, probe1.getX(), probe1.getY());
 
         assertThat(isCollision).isTrue();
 

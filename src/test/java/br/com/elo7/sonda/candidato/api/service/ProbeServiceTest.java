@@ -161,10 +161,11 @@ public class ProbeServiceTest {
         Probe probeSaved = ProbeFake.createWithoutPlanet();
         probeSaved.setId(1L);
 
-        Mockito.when(repository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+        Mockito.when(repository.existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(
                 Mockito.any(Planet.class),
                 Mockito.anyInt(),
-                Mockito.anyInt()
+                Mockito.anyInt(),
+                Mockito.anyLong()
         )).thenReturn(true);
 
         Mockito.when(repository.save(Mockito.any(Probe.class))).thenReturn(probeSaved);

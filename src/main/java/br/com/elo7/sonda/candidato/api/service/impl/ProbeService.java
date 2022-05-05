@@ -63,19 +63,29 @@ public class ProbeService implements IProbeService {
 
     public Probe insert(IProbeEntity probeEntity, Planet planetModel) {
 
-        checkCollision(probeEntity, planetModel);
+        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+                planetModel,
+                probeEntity.getX(),
+                probeEntity.getY()
+        );
+
+        if (isCollision) {
+            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES);
+        }
 
         Probe probe = modelMapper.map(probeEntity, Probe.class);
         probe.setPlanet(planetModel);
+        probe.setActive(true);
         probe.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         return probeRepository.save(probe);
     }
 
     private void checkCollision(IProbeEntity probeEntity, Planet planetModel) {
-        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndDeletedAtIsNull(
+        boolean isCollision = probeRepository.existsProbeByPlanetAndXAndYAndIdNotAndDeletedAtIsNull(
                 planetModel,
                 probeEntity.getX(),
-                probeEntity.getY()
+                probeEntity.getY(),
+                probeEntity.getId()
         );
 
         if (isCollision) {
@@ -105,6 +115,7 @@ public class ProbeService implements IProbeService {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         probe.setUpdatedAt(timestamp);
         probe.setDeletedAt(timestamp);
+        probe.setActive(false);
         this.probeRepository.save(probe);
     }
 

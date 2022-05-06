@@ -35,7 +35,7 @@ services:
       - '3306'
       # Where our data will be persisted
     volumes:
-      - probe-manager-db-test:/var/lib/mysql
+      - ./dump:/docker-entrypoint-initdb.d
 # Names our volume
 volumes:
   probe-manager-db:

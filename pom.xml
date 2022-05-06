@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>br.com.elo7</groupId>
 	<artifactId>sonda.candidato</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>sonda.candidato</name>
 	<description>Projeto para teste dos candidatos</description>
 	<properties>

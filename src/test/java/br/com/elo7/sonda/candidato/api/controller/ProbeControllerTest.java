@@ -1,9 +1,11 @@
 package br.com.elo7.sonda.candidato.api.controller;
 
 
+import br.com.elo7.sonda.candidato.api.core.controller.CoreControllerTes;
 import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
 import br.com.elo7.sonda.candidato.api.dto.probe.MoveProbeDTO;
 import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
+import br.com.elo7.sonda.candidato.api.model.Probe;
 import br.com.elo7.sonda.candidato.fakes.dto.MoveProbeDTOFake;
 import br.com.elo7.sonda.candidato.fakes.dto.PlanetDTOFake;
 import br.com.elo7.sonda.candidato.fakes.dto.ProbeDTOFake;
@@ -25,6 +27,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.*;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Probe.PATH;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ProbeControllerTest {
+public class ProbeControllerTest extends CoreControllerTes {
 
     @Autowired
     private MockMvc mvc;
@@ -48,23 +52,12 @@ public class ProbeControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
+        super.setUp();
         this.path = PATH;
 
         // Create planet with probes
-        PlanetDTO planetDTO = PlanetDTOFake.create();
-        String json = new ObjectMapper().writeValueAsString(planetDTO);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(Controller.Planet.PATH.concat(Controller.Probe.NAME))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc
-            .perform(request)
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.probes[0].id").value(probe1Id))
-            .andExpect(jsonPath("$.probes[1].id").value(3));
+        List<Probe> probes = this.createPlanetWithProbes();
+        this.probe1Id = probes.get(0).getId();
     }
 
     @Test
@@ -78,6 +71,7 @@ public class ProbeControllerTest {
 
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .put(this.path.concat("/" + probe1Id))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(jsonUpdate);
@@ -87,7 +81,7 @@ public class ProbeControllerTest {
         perform
             .andExpect(status().isOk())
             .andExpect(jsonPath("x").value(1))
-            .andExpect(jsonPath("y").value(4));
+            .andExpect(jsonPath("y").value(3));
     }
 
     @Test
@@ -102,6 +96,7 @@ public class ProbeControllerTest {
 
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .put(this.path.concat("/" + probe1Id))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(jsonUpdate);
@@ -120,6 +115,7 @@ public class ProbeControllerTest {
         mvc
             .perform(MockMvcRequestBuilders
                 .delete(this.path.concat("/" + probe1Id))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
@@ -128,6 +124,7 @@ public class ProbeControllerTest {
         mvc
             .perform(MockMvcRequestBuilders
                 .get(this.path.concat("/" + 1L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
@@ -141,6 +138,7 @@ public class ProbeControllerTest {
         mvc
             .perform(MockMvcRequestBuilders
                 .delete(this.path.concat("/" + 10L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
@@ -154,6 +152,7 @@ public class ProbeControllerTest {
         // Exec
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .get(this.path.concat("/" + probe1Id))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -162,7 +161,7 @@ public class ProbeControllerTest {
             .perform(requestUpdate)
             .andExpect(status().isOk())
             .andExpect(jsonPath("x").value(1))
-            .andExpect(jsonPath("y").value(3));
+            .andExpect(jsonPath("y").value(2));
     }
 
     @Test
@@ -172,6 +171,7 @@ public class ProbeControllerTest {
         // Exec
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .get(this.path.concat("/" + 10L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -182,11 +182,12 @@ public class ProbeControllerTest {
 
     @Test
     @DisplayName("List probes.")
-    public void listPlanets() throws Exception {
+    public void listProbes() throws Exception {
 
         // Exec
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
-                .get(this.path)
+                .get(this.path.concat("?orderBy=x"))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -195,9 +196,7 @@ public class ProbeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(probe1Id))
                 .andExpect(jsonPath("$.content[0].x").value(1))
-                .andExpect(jsonPath("$.content[0].y").value(3))
-                .andExpect(jsonPath("totalPages").value(1))
-                .andExpect(jsonPath("totalElements").value(2));
+                .andExpect(jsonPath("$.content[0].y").value(2));
     }
 
 

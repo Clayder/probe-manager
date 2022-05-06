@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Message.DefaultHttp.*;
-import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Message.Planet.DESCRIPTION_REGISTER_201;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Message.Security.SUMMARY_AUTHENTICATE;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Security.PATH;
 

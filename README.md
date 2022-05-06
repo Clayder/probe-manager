@@ -28,7 +28,7 @@ A orientação da sonda dentro do plano cartesiano usa uma rosa dos ventos como 
 
 ![rosa dos ventos](http://i.imgur.com/li8Ae5L.png "Rosa dos Ventos")
 
-# 2. Tecnologias utilizadas
+# :man_technologist: Tecnologias utilizadas
 
  1. **Spring Boot**
  2. **MySQL**
@@ -53,7 +53,7 @@ A orientação da sonda dentro do plano cartesiano usa uma rosa dos ventos como 
  6. **test.api.controller**: Teste de integração utilizando o banco de testes.
  7. **docker-compose.yaml**: Utilizado para criar o banco de dados de desenvolvimento e testes.
 
-# 4. Banco de dados
+# :floppy_disk: Banco de dados
 
 ## Modelagem
 

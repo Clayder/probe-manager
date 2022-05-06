@@ -1,6 +1,5 @@
 package br.com.elo7.sonda.candidato.api.model;
 
-import br.com.elo7.sonda.candidato.core.model.AbstractCoreModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -34,7 +33,7 @@ public class Planet {
 
     @NotEmpty(message = REQUIRED_FIELD)
     @Length(min = NAME_SIZE_MIN, max = NAME_SIZE_MAX, message = NAME_LENGTH_FIELD)
-    @Column(unique=true)
+    @Column(unique = true)
     private String name;
 
     @NotNull(message = REQUIRED_FIELD)
@@ -48,7 +47,6 @@ public class Planet {
     @JsonBackReference
     @OneToMany(mappedBy = "planet")
     private List<Probe> probes = new ArrayList<>();
-
 
 
 }

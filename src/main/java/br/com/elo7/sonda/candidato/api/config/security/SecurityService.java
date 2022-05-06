@@ -13,17 +13,17 @@ import java.util.Optional;
 @Service
 public class SecurityService implements UserDetailsService {
 
-	@Autowired
-	private IUserRepository repository;
+    @Autowired
+    private IUserRepository repository;
 
-	@Override
-	public User loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> usuario = repository.findByEmail(username);
-		if (usuario.isPresent()) {
-			return usuario.get();
-		}
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> usuario = repository.findByEmail(username);
+        if (usuario.isPresent()) {
+            return usuario.get();
+        }
 
-		throw new UsernameNotFoundException("Invalid data!");
-	}
+        throw new UsernameNotFoundException("Invalid data!");
+    }
 
 }

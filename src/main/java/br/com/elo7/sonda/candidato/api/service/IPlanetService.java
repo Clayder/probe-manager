@@ -20,5 +20,6 @@ public interface IPlanetService {
     Page<Planet> findPage(Integer page, Integer limitPerPage, String orderBy, String sort);
 
     Planet insert(IPlanetEntity planetEntity);
+
     Planet insert(Planet planet);
 }

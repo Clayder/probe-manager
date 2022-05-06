@@ -2,7 +2,6 @@ package br.com.elo7.sonda.candidato.api.config.security;
 
 import br.com.elo7.sonda.candidato.api.constants.IConstants;
 import br.com.elo7.sonda.candidato.api.service.ITokenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

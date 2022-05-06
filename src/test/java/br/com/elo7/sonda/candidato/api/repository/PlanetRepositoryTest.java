@@ -17,9 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
-import javax.validation.ConstraintViolationException;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

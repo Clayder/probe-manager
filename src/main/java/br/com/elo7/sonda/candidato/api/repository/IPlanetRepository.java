@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPlanetRepository extends JpaRepository<Planet, Long> {
     Boolean existsPlanetByName(String name);
+
     Boolean existsPlanetByNameAndIdNot(String name, Long id);
 
 }

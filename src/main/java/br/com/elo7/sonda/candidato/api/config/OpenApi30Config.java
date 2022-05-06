@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "API Probe", version = "v1"))
 @SecurityScheme(
-    name = "bearerAuth",
-    type = SecuritySchemeType.HTTP,
-    bearerFormat = "JWT",
-    scheme = "Bearer"
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "Bearer"
 )
 public class OpenApi30Config {
 

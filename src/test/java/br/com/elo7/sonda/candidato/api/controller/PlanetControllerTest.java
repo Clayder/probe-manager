@@ -64,15 +64,15 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("name").value(planetDTO.getName()))
-            .andExpect(jsonPath("width").value(planetDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetDTO.getHeight()))
-            .andExpect(jsonPath("$.probes[0].x").value(1))
-            .andExpect(jsonPath("$.probes[0].y").value(3))
-            .andExpect(jsonPath("$.probes[1].x").value(5))
-            .andExpect(jsonPath("$.probes[1].y").value(1));
+                .perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("name").value(planetDTO.getName()))
+                .andExpect(jsonPath("width").value(planetDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetDTO.getHeight()))
+                .andExpect(jsonPath("$.probes[0].x").value(1))
+                .andExpect(jsonPath("$.probes[0].y").value(3))
+                .andExpect(jsonPath("$.probes[1].x").value(5))
+                .andExpect(jsonPath("$.probes[1].y").value(1));
 
     }
 
@@ -95,8 +95,8 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isBadRequest());
+                .perform(request)
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -115,11 +115,11 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("name").value(planetDTO.getName()))
-            .andExpect(jsonPath("width").value(planetDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetDTO.getHeight()));
+                .perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("name").value(planetDTO.getName()))
+                .andExpect(jsonPath("width").value(planetDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetDTO.getHeight()));
 
     }
 
@@ -142,8 +142,8 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isBadRequest());
+                .perform(request)
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -156,21 +156,21 @@ public class PlanetControllerTest extends CoreControllerTes {
 
         // Exec
         mvc
-            .perform(MockMvcRequestBuilders
-                .delete(this.path.concat("/" + 1L))
-                .header("Authorization", this.token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+                .perform(MockMvcRequestBuilders
+                        .delete(this.path.concat("/" + 1L))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
         // Assert
         mvc
-            .perform(MockMvcRequestBuilders
-                .get(this.path.concat("/" + planetSaved.getId()))
-                .header("Authorization", this.token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .perform(MockMvcRequestBuilders
+                        .get(this.path.concat("/" + planetSaved.getId()))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -179,12 +179,12 @@ public class PlanetControllerTest extends CoreControllerTes {
 
         // Exec
         mvc
-            .perform(MockMvcRequestBuilders
-                .delete(this.path.concat("/" + 1L))
-                .header("Authorization", this.token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .perform(MockMvcRequestBuilders
+                        .delete(this.path.concat("/" + 1L))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
 
     }
 
@@ -210,18 +210,18 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(oldPlanetDTO.getName()))
-            .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()));
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(oldPlanetDTO.getName()))
+                .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()));
     }
 
     @Test
     @DisplayName("Error update size planet.")
     public void errorUpdateSizePlanetSuccessfully() throws Exception {
 
-       // Create new Planet
+        // Create new Planet
         Planet planetSaved = this.createPlanet();
 
         // Exec
@@ -239,15 +239,15 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isBadRequest());
+                .perform(requestUpdate)
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("Get planet by ID.")
     public void getPlanetById() throws Exception {
 
-       // Create new Planet
+        // Create new Planet
         Planet planetSaved = this.createPlanet();
 
         // Exec
@@ -258,11 +258,12 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(planetSaved.getName()))
-            .andExpect(jsonPath("width").value(planetSaved.getWidth()))
-            .andExpect(jsonPath("height").value(planetSaved.getHeight()));;
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(planetSaved.getName()))
+                .andExpect(jsonPath("width").value(planetSaved.getWidth()))
+                .andExpect(jsonPath("height").value(planetSaved.getHeight()));
+        ;
     }
 
     @Test
@@ -277,15 +278,15 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isNotFound());
+                .perform(requestUpdate)
+                .andExpect(status().isNotFound());
     }
 
     @Test
     @DisplayName("List planets.")
     public void listPlanets() throws Exception {
 
-       // Create new Planet
+        // Create new Planet
         Planet planetSaved = this.createPlanet();
 
         // Exec
@@ -296,14 +297,14 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content[0].id").value(planetSaved.getId()))
-            .andExpect(jsonPath("$.content[0].name").value(planetSaved.getName()))
-            .andExpect(jsonPath("$.content[0].width").value(planetSaved.getWidth()))
-            .andExpect(jsonPath("$.content[0].height").value(planetSaved.getHeight()))
-            .andExpect(jsonPath("totalPages").value(1))
-            .andExpect(jsonPath("totalElements").value(1));
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(planetSaved.getId()))
+                .andExpect(jsonPath("$.content[0].name").value(planetSaved.getName()))
+                .andExpect(jsonPath("$.content[0].width").value(planetSaved.getWidth()))
+                .andExpect(jsonPath("$.content[0].height").value(planetSaved.getHeight()))
+                .andExpect(jsonPath("totalPages").value(1))
+                .andExpect(jsonPath("totalElements").value(1));
 
     }
 
@@ -319,20 +320,20 @@ public class PlanetControllerTest extends CoreControllerTes {
         String json = new ObjectMapper().writeValueAsString(newProbeDTO);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(this.path.concat("/"+1L+"/probes"))
+                .post(this.path.concat("/" + 1L + "/probes"))
                 .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(planetSaved.getName()))
-            .andExpect(jsonPath("width").value(planetSaved.getWidth()))
-            .andExpect(jsonPath("height").value(planetSaved.getHeight()))
-            .andExpect(jsonPath("$.probes[0].x").value(1))
-            .andExpect(jsonPath("$.probes[0].y").value(3));
+                .perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(planetSaved.getName()))
+                .andExpect(jsonPath("width").value(planetSaved.getWidth()))
+                .andExpect(jsonPath("height").value(planetSaved.getHeight()))
+                .andExpect(jsonPath("$.probes[0].x").value(1))
+                .andExpect(jsonPath("$.probes[0].y").value(3));
 
     }
 
@@ -352,15 +353,15 @@ public class PlanetControllerTest extends CoreControllerTes {
         String json = new ObjectMapper().writeValueAsString(newProbeDTO);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(this.path.concat("/"+planetSaved.getId()+"/probes"))
+                .post(this.path.concat("/" + planetSaved.getId() + "/probes"))
                 .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isBadRequest());
+                .perform(request)
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -386,12 +387,12 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(planetUpdateDTO.getName()))
-            .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()))
-            .andExpect(jsonPath("updatedAt").isNotEmpty());
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(planetUpdateDTO.getName()))
+                .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()))
+                .andExpect(jsonPath("updatedAt").isNotEmpty());
     }
 
     @Test
@@ -417,8 +418,8 @@ public class PlanetControllerTest extends CoreControllerTes {
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isBadRequest());
+                .perform(requestUpdate)
+                .andExpect(status().isBadRequest());
     }
 
 

@@ -2,12 +2,10 @@ package br.com.elo7.sonda.candidato.api.controller;
 
 
 import br.com.elo7.sonda.candidato.api.core.controller.CoreControllerTes;
-import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
 import br.com.elo7.sonda.candidato.api.dto.probe.MoveProbeDTO;
 import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
 import br.com.elo7.sonda.candidato.api.model.Probe;
 import br.com.elo7.sonda.candidato.fakes.dto.MoveProbeDTOFake;
-import br.com.elo7.sonda.candidato.fakes.dto.PlanetDTOFake;
 import br.com.elo7.sonda.candidato.fakes.dto.ProbeDTOFake;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +27,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
-import static br.com.elo7.sonda.candidato.api.constants.IConstants.*;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Probe.PATH;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -79,9 +76,9 @@ public class ProbeControllerTest extends CoreControllerTes {
         ResultActions perform = mvc
                 .perform(requestUpdate);
         perform
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("x").value(1))
-            .andExpect(jsonPath("y").value(3));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("x").value(1))
+                .andExpect(jsonPath("y").value(3));
     }
 
     @Test
@@ -104,7 +101,7 @@ public class ProbeControllerTest extends CoreControllerTes {
         ResultActions perform = mvc
                 .perform(requestUpdate);
         perform
-            .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -113,21 +110,21 @@ public class ProbeControllerTest extends CoreControllerTes {
 
         // Exec
         mvc
-            .perform(MockMvcRequestBuilders
-                .delete(this.path.concat("/" + probe1Id))
-                .header("Authorization", this.token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+                .perform(MockMvcRequestBuilders
+                        .delete(this.path.concat("/" + probe1Id))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
         // Assert
         mvc
-            .perform(MockMvcRequestBuilders
-                .get(this.path.concat("/" + 1L))
-                .header("Authorization", this.token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .perform(MockMvcRequestBuilders
+                        .get(this.path.concat("/" + 1L))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -136,12 +133,12 @@ public class ProbeControllerTest extends CoreControllerTes {
 
         // Exec
         mvc
-            .perform(MockMvcRequestBuilders
-                .delete(this.path.concat("/" + 10L))
-                .header("Authorization", this.token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .perform(MockMvcRequestBuilders
+                        .delete(this.path.concat("/" + 10L))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
 
     }
 
@@ -158,10 +155,10 @@ public class ProbeControllerTest extends CoreControllerTes {
 
         ProbeDTO probeDTO = ProbeDTOFake.create1();
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("x").value(1))
-            .andExpect(jsonPath("y").value(2));
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("x").value(1))
+                .andExpect(jsonPath("y").value(2));
     }
 
     @Test
@@ -176,8 +173,8 @@ public class ProbeControllerTest extends CoreControllerTes {
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isNotFound());
+                .perform(requestUpdate)
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -198,8 +195,6 @@ public class ProbeControllerTest extends CoreControllerTes {
                 .andExpect(jsonPath("$.content[0].x").value(1))
                 .andExpect(jsonPath("$.content[0].y").value(2));
     }
-
-
 
 
 }

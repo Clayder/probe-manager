@@ -1,11 +1,8 @@
 package br.com.elo7.sonda.candidato.api.service.impl;
 
-import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.api.model.User;
 import br.com.elo7.sonda.candidato.api.repository.IUserRepository;
 import br.com.elo7.sonda.candidato.api.service.IUserService;
-import br.com.elo7.sonda.candidato.domain.exceptions.messages.ErrorMessage;
-import br.com.elo7.sonda.candidato.domain.exceptions.type.ObjectNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 

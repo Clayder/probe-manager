@@ -1,6 +1,5 @@
 package br.com.elo7.sonda.candidato.api.model;
 
-import br.com.elo7.sonda.candidato.core.model.AbstractCoreModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +19,7 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "x", "y", "planet_id", "active"}) })
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"x", "y", "planet_id", "active"})})
 public class Probe {
 
     @Id

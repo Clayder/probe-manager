@@ -256,10 +256,10 @@ public class PlanetServiceTest {
         Planet planetSaved = PlanetFake.create();
         planetSaved.setId(1L);
 
-         Mockito.when(repository.save(Mockito.any(Planet.class))).thenReturn(planetSaved);
-         Mockito.when(probeRepository.save(Mockito.any(Probe.class))).thenReturn(Mockito.any(Probe.class));
+        Mockito.when(repository.save(Mockito.any(Planet.class))).thenReturn(planetSaved);
+        Mockito.when(probeRepository.save(Mockito.any(Probe.class))).thenReturn(Mockito.any(Probe.class));
 
-         // exec
+        // exec
         Planet planet = service.addProbePlanet(planetEntity);
 
         List<IProbeEntity> probes = planetEntity.getProbes();

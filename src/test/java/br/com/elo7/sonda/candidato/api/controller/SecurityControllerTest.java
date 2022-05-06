@@ -1,12 +1,7 @@
 package br.com.elo7.sonda.candidato.api.controller;
 
 import br.com.elo7.sonda.candidato.api.core.controller.CoreControllerTes;
-import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
-import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
-import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.fakes.dto.LoginDTOFake;
-import br.com.elo7.sonda.candidato.fakes.dto.PlanetDTOFake;
-import br.com.elo7.sonda.candidato.fakes.dto.ProbeDTOFake;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +16,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Security.PATH;

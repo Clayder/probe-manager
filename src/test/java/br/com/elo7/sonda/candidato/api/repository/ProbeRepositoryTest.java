@@ -17,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,6 +1,5 @@
 package br.com.elo7.sonda.candidato.fakes.model;
 
-import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
 import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.api.model.Probe;
 import br.com.elo7.sonda.candidato.domain.probemanager.entities.constants.Direction;

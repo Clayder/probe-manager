@@ -1,6 +1,5 @@
 package br.com.elo7.sonda.candidato.api.controller;
 
-import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
 import br.com.elo7.sonda.candidato.api.dto.security.LoginDTO;
 import br.com.elo7.sonda.candidato.api.dto.security.TokenDTO;
 import br.com.elo7.sonda.candidato.api.service.ITokenService;
@@ -31,25 +30,25 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Se
 @RequestMapping(PATH)
 @Tag(name = "Autenticação")
 @ApiResponses(
-            value = {
-                     @ApiResponse(responseCode = "500", description = DESCRIPTION_500, content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = StandardError.class))
-                    })
-            }
-    )
+        value = {
+                @ApiResponse(responseCode = "500", description = DESCRIPTION_500, content = {
+                        @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = StandardError.class))
+                })
+        }
+)
 public class SecurityController {
 
-	private AuthenticationManager authManager;
+    private AuthenticationManager authManager;
 
-	private ITokenService tokenService;
+    private ITokenService tokenService;
 
-	public SecurityController(AuthenticationManager authManager, ITokenService tokenService) {
-		this.authManager = authManager;
-		this.tokenService = tokenService;
-	}
+    public SecurityController(AuthenticationManager authManager, ITokenService tokenService) {
+        this.authManager = authManager;
+        this.tokenService = tokenService;
+    }
 
-	@Operation(summary = SUMMARY_AUTHENTICATE)
+    @Operation(summary = SUMMARY_AUTHENTICATE)
     @ApiResponses(
             value = {
                     @ApiResponse(
@@ -62,18 +61,18 @@ public class SecurityController {
                     @ApiResponse(responseCode = "400", description = DESCRIPTION_400, content = @Content),
             }
     )
-	@PostMapping
-	public ResponseEntity<TokenDTO> authenticate(@RequestBody @Valid LoginDTO form) {
-		UsernamePasswordAuthenticationToken dadosLogin = form.convert();
+    @PostMapping
+    public ResponseEntity<TokenDTO> authenticate(@RequestBody @Valid LoginDTO form) {
+        UsernamePasswordAuthenticationToken dadosLogin = form.convert();
 
-		try {
-			Authentication authentication = authManager.authenticate(dadosLogin);
-			String token = tokenService.createToken(authentication);
-			return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
-		} catch (AuthenticationException e) {
-			return ResponseEntity.badRequest().build();
-		}
-	}
+        try {
+            Authentication authentication = authManager.authenticate(dadosLogin);
+            String token = tokenService.createToken(authentication);
+            return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
+        } catch (AuthenticationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 }
 

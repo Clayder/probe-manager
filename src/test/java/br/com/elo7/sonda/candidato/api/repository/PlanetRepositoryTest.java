@@ -15,7 +15,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
+import javax.validation.ConstraintViolationException;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,10 +74,9 @@ public class PlanetRepositoryTest {
         Planet planet = PlanetFake.create();
         Planet planet2 = PlanetFake.create();
         entityManager.persist(planet);
-        entityManager.persist(planet2);
 
         Assertions.assertThrows(
-                RollbackException.class, () -> entityManager.getEntityManager().getTransaction().commit());
+                PersistenceException.class, () -> entityManager.persist(planet2));
 
     }
 

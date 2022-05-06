@@ -13,7 +13,7 @@ Sequencia de comandos: LMLMLMLMM
 Posição final da sonda: x=1 y=3 apontando para Norte
 
 Posição de pouso da sonda 2: x=3, y=3 apontando para Leste
-Sequencia de comandos: M M R M M R M R R M L
+Sequencia de comandos: MMRMMRMRRML
 Posição final da sonda: x=5 y=1 apontando para Norte
 ```
 
@@ -78,5 +78,5 @@ Com isso as dependências serão baixadas e a API subirá na porta `8080`;
 - Aqui você pode usar o Postman, por exemplo, ou o curl como abaixo:
 
 ```bash
-curl -X POST http://localhost:8080/planet-with-probes -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probes":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
+curl -X POST http://localhost:8080/planetEntity-with-probeEntities -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probeEntities":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
 ```

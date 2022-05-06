@@ -1,5 +1,5 @@
 
-# 1. Objetivo:
+# :fist_right::fist_left: Objetivo:
 
 O objetivo do projeto é criar um simulador, para poder controlar sondas em outros planetas por meio de comandos.
 
@@ -39,7 +39,7 @@ A orientação da sonda dentro do plano cartesiano usa uma rosa dos ventos como 
  7. **JUnit** 
  8. **Postman**
 
-# 3. Organização do projeto
+# :open_file_folder: Organização do projeto
 
 ![image](https://user-images.githubusercontent.com/8002128/167206148-96577fc3-05e9-4906-a26c-70e346b6c3b5.png)
 
@@ -85,7 +85,7 @@ Para subir o banco é só executar o comando: `docker-compose up --build`
 	MYSQL_PASSWORD: 'password'  
 	MYSQL_ROOT_PASSWORD: 'password'
 
-# 5. Documentação da API
+# :spiral_notepad: Documentação da API
 
 Toda a API foi documentada utilizando o Swagger.
 Para acessar a documentação, é só acessar a URL [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
@@ -94,7 +94,7 @@ Para acessar a documentação, é só acessar a URL [http://localhost:8080/swagg
 ![image](https://user-images.githubusercontent.com/8002128/167207909-c77ee9a2-e398-41ba-93fb-c8a5b1e37572.png)
 
 
-# 6. Autenticação na API
+# :closed_lock_with_key: Autenticação na API
 
 ## Dados do usuário default
 

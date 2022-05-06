@@ -16,7 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.persistence.RollbackException;
+import javax.persistence.PersistenceException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,11 +47,9 @@ public class ProbeRepositoryTest {
         entityManager.persist(probe1);
 
         Probe probe2 = ProbeFake.create(planet);
-        entityManager.persist(probe2);
-
 
         Assertions.assertThrows(
-                RollbackException.class, () -> entityManager.getEntityManager().getTransaction().commit());
+                PersistenceException.class, () -> entityManager.persist(probe2));
 
     }
 
@@ -71,7 +69,7 @@ public class ProbeRepositoryTest {
                 planet,
                 probe1.getX(),
                 probe1.getY(),
-                1L
+                20L
         );
 
         assertThat(isCollision).isTrue();

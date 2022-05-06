@@ -10,5 +10,9 @@ public interface ErrorMessage {
     String DUPLICATE_PLANET = "Planet already registered.";
     String AVOID_COLLISION_BETWEEN_PROBES = "There is a probe in that position.";
 
+    String INVALID_COMMAND = "Invalid command";
+    String INVALID_DIRECTION = "Invalid direction";
+
+
 
 }

@@ -6,8 +6,6 @@ import lombok.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import java.sql.Timestamp;
-
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Default.GREATER_THAN_ZERO;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Default.REQUIRED_FIELD;
 

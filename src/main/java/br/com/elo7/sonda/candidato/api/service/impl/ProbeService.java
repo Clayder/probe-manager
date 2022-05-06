@@ -21,6 +21,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class ProbeService implements IProbeService {
@@ -28,6 +30,8 @@ public class ProbeService implements IProbeService {
     private IProbeRepository probeRepository;
 
     private ModelMapper modelMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(ProbeService.class);
 
     public ProbeService(IProbeRepository probeRepository, ModelMapper modelMapper) {
         this.probeRepository = probeRepository;
@@ -39,6 +43,10 @@ public class ProbeService implements IProbeService {
         return planetEntity.getProbes()
                 .stream().map(
                         probeEntity -> {
+                            logger.debug(String.format(
+                                    "Planet %d Probe X_ORIG: %d Y_ORIG: %d",
+                                    planetModel.getId(), probeEntity.getX(), probeEntity.getY()
+                            ));
                             moveProbeWithAllCommands(probeEntity, planetEntity);
                             return this.insert(probeEntity, planetModel);
                         }
@@ -48,16 +56,16 @@ public class ProbeService implements IProbeService {
     @Override
     public Probe moveProbe(IProbeEntity probeEntity, IPlanetEntity planetEntity, Probe probeModel) {
 
-         moveProbeWithAllCommands(probeEntity, planetEntity);
+        moveProbeWithAllCommands(probeEntity, planetEntity);
 
-         probeModel.setX(probeEntity.getX());
-         probeModel.setY(probeEntity.getY());
-         probeModel.setDirection(probeEntity.getDirection());
-         probeModel.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        probeModel.setX(probeEntity.getX());
+        probeModel.setY(probeEntity.getY());
+        probeModel.setDirection(probeEntity.getDirection());
+        probeModel.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
-         checkCollision(probeEntity, probeModel.getPlanet());
+        checkCollision(probeEntity, probeModel.getPlanet());
 
-         return this.probeRepository.save(probeModel);
+        return this.probeRepository.save(probeModel);
 
     }
 
@@ -70,7 +78,7 @@ public class ProbeService implements IProbeService {
         );
 
         if (isCollision) {
-            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES);
+            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES, logger);
         }
 
         Probe probe = modelMapper.map(probeEntity, Probe.class);
@@ -89,7 +97,7 @@ public class ProbeService implements IProbeService {
         );
 
         if (isCollision) {
-            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES);
+            throw new BusinessException(ErrorMessage.AVOID_COLLISION_BETWEEN_PROBES, logger);
         }
     }
 
@@ -102,9 +110,9 @@ public class ProbeService implements IProbeService {
     @Override
     public Probe getById(Long id) {
         Optional<Probe> obj = probeRepository.findById(id);
-        Probe probe = obj.orElseThrow(() -> new ObjectNotFoundException(ErrorMessage.PROBE_NOT_FOUND));
+        Probe probe = obj.orElseThrow(() -> new ObjectNotFoundException(ErrorMessage.PROBE_NOT_FOUND, logger));
         if (probe.getDeletedAt() != null) {
-            throw new ObjectNotFoundException(ErrorMessage.PROBE_NOT_FOUND);
+            throw new ObjectNotFoundException(ErrorMessage.PROBE_NOT_FOUND, logger);
         }
         return probe;
     }
@@ -134,6 +142,7 @@ public class ProbeService implements IProbeService {
 
     private void moveProbeWithAllCommands(IProbeEntity probeEntity, IPlanetEntity planetEntity) {
         for (char command : probeEntity.getCommands().toCharArray()) {
+            logger.debug(String.format("Running the command: %c", command));
             probeEntity.applyCommandToProbe(command, planetEntity);
         }
     }

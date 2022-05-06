@@ -18,9 +18,15 @@ public interface IConstants {
             String PATH = VERSION + NAME;
         }
 
+        interface Security {
+            String NAME = "/auth";
+            String PATH = VERSION + NAME;
+        }
+
         interface Message {
 
             interface DefaultHttp {
+                String DESCRIPTION_500 = "Erro interno.";
                 String DESCRIPTION_400 = "Erro de validação.";
                 String DESCRIPTION_422 = "Ocorreu erro com a regra de negócio.";
                 String DESCRIPTION_404 = "Registro não encontrado.";
@@ -54,6 +60,10 @@ public interface IConstants {
                 String SUMMARY_GET = "Retornar uma sonda.";
             }
 
+            interface Security extends IConstants.Controller.Message.DefaultHttp {
+                String SUMMARY_AUTHENTICATE = "Gerar token JWT";
+            }
+
         }
     }
 
@@ -66,8 +76,11 @@ public interface IConstants {
 
         interface Planet extends Default {
             int NAME_SIZE_MIN = 2;
+            int PASSWORD_SIZE_MIN = 4;
+            int PASSWORD_SIZE_MAX = 8;
             int NAME_SIZE_MAX = 15;
             String NAME_LENGTH_FIELD = "The length must be between " + NAME_SIZE_MIN + " and " + NAME_SIZE_MAX + " characters.";
+            String PASSWORD_LENGTH_FIELD = "The length must be between " + PASSWORD_SIZE_MIN + " and " + PASSWORD_SIZE_MAX + " characters.";
 
         }
     }

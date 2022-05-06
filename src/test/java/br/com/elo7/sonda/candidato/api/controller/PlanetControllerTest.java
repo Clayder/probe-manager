@@ -4,8 +4,10 @@ package br.com.elo7.sonda.candidato.api.controller;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Planet.PATH;
 
 import br.com.elo7.sonda.candidato.api.constants.IConstants;
+import br.com.elo7.sonda.candidato.api.core.controller.CoreControllerTes;
 import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
 import br.com.elo7.sonda.candidato.api.dto.probe.ProbeDTO;
+import br.com.elo7.sonda.candidato.api.model.Planet;
 import br.com.elo7.sonda.candidato.fakes.dto.PlanetDTOFake;
 import br.com.elo7.sonda.candidato.fakes.dto.ProbeDTOFake;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PlanetControllerTest {
+public class PlanetControllerTest extends CoreControllerTes {
 
     @Autowired
     private MockMvc mvc;
@@ -43,6 +45,7 @@ public class PlanetControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
+        super.setUp();
         this.path = PATH;
     }
 
@@ -55,20 +58,21 @@ public class PlanetControllerTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(this.path.concat(IConstants.Controller.Probe.NAME))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("name").value(planetDTO.getName()))
-            .andExpect(jsonPath("width").value(planetDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetDTO.getHeight()))
-            .andExpect(jsonPath("$.probes[0].x").value(1))
-            .andExpect(jsonPath("$.probes[0].y").value(3))
-            .andExpect(jsonPath("$.probes[1].x").value(5))
-            .andExpect(jsonPath("$.probes[1].y").value(1));
+                .perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("name").value(planetDTO.getName()))
+                .andExpect(jsonPath("width").value(planetDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetDTO.getHeight()))
+                .andExpect(jsonPath("$.probes[0].x").value(1))
+                .andExpect(jsonPath("$.probes[0].y").value(3))
+                .andExpect(jsonPath("$.probes[1].x").value(5))
+                .andExpect(jsonPath("$.probes[1].y").value(1));
 
     }
 
@@ -85,13 +89,14 @@ public class PlanetControllerTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(this.path.concat(IConstants.Controller.Probe.NAME))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isBadRequest());
+                .perform(request)
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -104,16 +109,17 @@ public class PlanetControllerTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(this.path)
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("name").value(planetDTO.getName()))
-            .andExpect(jsonPath("width").value(planetDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetDTO.getHeight()));
+                .perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("name").value(planetDTO.getName()))
+                .andExpect(jsonPath("width").value(planetDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetDTO.getHeight()));
 
     }
 
@@ -130,13 +136,14 @@ public class PlanetControllerTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(this.path)
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isBadRequest());
+                .perform(request)
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -145,35 +152,25 @@ public class PlanetControllerTest {
     public void deletePlanetSuccessfully() throws Exception {
 
         // Create new Planet
-        PlanetDTO planetDTO = PlanetDTOFake.createWithoutProbe();
-        planetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(planetDTO);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc
-            .perform(request)
-            .andExpect(status().isCreated());
+        Planet planetSaved = this.createPlanet();
 
         // Exec
         mvc
-            .perform(MockMvcRequestBuilders
-                .delete(this.path.concat("/" + 1L))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+                .perform(MockMvcRequestBuilders
+                        .delete(this.path.concat("/" + 1L))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
         // Assert
         mvc
-            .perform(MockMvcRequestBuilders
-                .get(this.path.concat("/" + 1L))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .perform(MockMvcRequestBuilders
+                        .get(this.path.concat("/" + planetSaved.getId()))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -182,11 +179,12 @@ public class PlanetControllerTest {
 
         // Exec
         mvc
-            .perform(MockMvcRequestBuilders
-                .delete(this.path.concat("/" + 1L))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .perform(MockMvcRequestBuilders
+                        .delete(this.path.concat("/" + 1L))
+                        .header("Authorization", this.token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
 
     }
 
@@ -195,17 +193,7 @@ public class PlanetControllerTest {
     public void updateSizePlanetSuccessfully() throws Exception {
 
         // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(oldPlanetDTO);
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isCreated());
+        Planet oldPlanetDTO = this.createPlanet();
 
         // Exec
         PlanetDTO planetUpdateDTO = PlanetDTOFake.create();
@@ -216,34 +204,25 @@ public class PlanetControllerTest {
 
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .patch(this.path.concat("/" + 1L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(oldPlanetDTO.getName()))
-            .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()));
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(oldPlanetDTO.getName()))
+                .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()));
     }
 
     @Test
     @DisplayName("Error update size planet.")
     public void errorUpdateSizePlanetSuccessfully() throws Exception {
 
-       // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(oldPlanetDTO);
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isCreated());
+        // Create new Planet
+        Planet planetSaved = this.createPlanet();
 
         // Exec
         PlanetDTO planetUpdateDTO = PlanetDTOFake.create();
@@ -254,44 +233,37 @@ public class PlanetControllerTest {
 
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .patch(this.path.concat("/" + 1L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isBadRequest());
+                .perform(requestUpdate)
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("Get planet by ID.")
     public void getPlanetById() throws Exception {
 
-       // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(oldPlanetDTO);
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isCreated());
+        // Create new Planet
+        Planet planetSaved = this.createPlanet();
 
         // Exec
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .get(this.path.concat("/" + 1L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(oldPlanetDTO.getName()))
-            .andExpect(jsonPath("width").value(oldPlanetDTO.getWidth()))
-            .andExpect(jsonPath("height").value(oldPlanetDTO.getHeight()));;
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(planetSaved.getName()))
+                .andExpect(jsonPath("width").value(planetSaved.getWidth()))
+                .andExpect(jsonPath("height").value(planetSaved.getHeight()));
+        ;
     }
 
     @Test
@@ -301,46 +273,38 @@ public class PlanetControllerTest {
         // Exec
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .get(this.path.concat("/" + 1L))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isNotFound());
+                .perform(requestUpdate)
+                .andExpect(status().isNotFound());
     }
 
     @Test
     @DisplayName("List planets.")
     public void listPlanets() throws Exception {
 
-       // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(oldPlanetDTO);
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isCreated());
+        // Create new Planet
+        Planet planetSaved = this.createPlanet();
 
         // Exec
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
                 .get(this.path)
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content[0].id").value(1L))
-            .andExpect(jsonPath("$.content[0].name").value(oldPlanetDTO.getName()))
-            .andExpect(jsonPath("$.content[0].width").value(oldPlanetDTO.getWidth()))
-            .andExpect(jsonPath("$.content[0].height").value(oldPlanetDTO.getHeight()))
-            .andExpect(jsonPath("totalPages").value(1))
-            .andExpect(jsonPath("totalElements").value(1));
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(planetSaved.getId()))
+                .andExpect(jsonPath("$.content[0].name").value(planetSaved.getName()))
+                .andExpect(jsonPath("$.content[0].width").value(planetSaved.getWidth()))
+                .andExpect(jsonPath("$.content[0].height").value(planetSaved.getHeight()))
+                .andExpect(jsonPath("totalPages").value(1))
+                .andExpect(jsonPath("totalElements").value(1));
 
     }
 
@@ -349,35 +313,27 @@ public class PlanetControllerTest {
     public void insertProbeSpecificPlanet() throws Exception {
 
         // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(oldPlanetDTO)))
-            .andExpect(status().isCreated());
+        Planet planetSaved = this.createPlanet();
 
         //Exec
         ProbeDTO newProbeDTO = ProbeDTOFake.create1();
         String json = new ObjectMapper().writeValueAsString(newProbeDTO);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(this.path.concat("/"+1L+"/probes"))
+                .post(this.path.concat("/" + 1L + "/probes"))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(oldPlanetDTO.getName()))
-            .andExpect(jsonPath("width").value(oldPlanetDTO.getWidth()))
-            .andExpect(jsonPath("height").value(oldPlanetDTO.getHeight()))
-            .andExpect(jsonPath("$.probes[0].x").value(1))
-            .andExpect(jsonPath("$.probes[0].y").value(3));
+                .perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(planetSaved.getName()))
+                .andExpect(jsonPath("width").value(planetSaved.getWidth()))
+                .andExpect(jsonPath("height").value(planetSaved.getHeight()))
+                .andExpect(jsonPath("$.probes[0].x").value(1))
+                .andExpect(jsonPath("$.probes[0].y").value(3));
 
     }
 
@@ -386,16 +342,7 @@ public class PlanetControllerTest {
     public void errorInsertProbeSpecificPlanet() throws Exception {
 
         // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(oldPlanetDTO)))
-            .andExpect(status().isCreated());
+        Planet planetSaved = this.createPlanet();
 
         //Exec
         ProbeDTO newProbeDTO = ProbeDTOFake.create1();
@@ -406,14 +353,15 @@ public class PlanetControllerTest {
         String json = new ObjectMapper().writeValueAsString(newProbeDTO);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(this.path.concat("/"+1L+"/probes"))
+                .post(this.path.concat("/" + planetSaved.getId() + "/probes"))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
 
         mvc
-            .perform(request)
-            .andExpect(status().isBadRequest());
+                .perform(request)
+                .andExpect(status().isBadRequest());
 
     }
 
@@ -422,17 +370,7 @@ public class PlanetControllerTest {
     public void updatePlanetSuccessfully() throws Exception {
 
         // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(oldPlanetDTO);
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isCreated());
+        Planet planetSaved = this.createPlanet();
 
         // Exec
         PlanetDTO planetUpdateDTO = PlanetDTOFake.create();
@@ -442,18 +380,19 @@ public class PlanetControllerTest {
         String jsonUpdate = new ObjectMapper().writeValueAsString(planetUpdateDTO);
 
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
-                .put(this.path.concat("/" + 1L))
+                .put(this.path.concat("/" + planetSaved.getId()))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("name").value(planetUpdateDTO.getName()))
-            .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
-            .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()))
-            .andExpect(jsonPath("updatedAt").isNotEmpty());
+                .perform(requestUpdate)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value(planetUpdateDTO.getName()))
+                .andExpect(jsonPath("width").value(planetUpdateDTO.getWidth()))
+                .andExpect(jsonPath("height").value(planetUpdateDTO.getHeight()))
+                .andExpect(jsonPath("updatedAt").isNotEmpty());
     }
 
     @Test
@@ -461,17 +400,7 @@ public class PlanetControllerTest {
     public void errorUpdatePlanet() throws Exception {
 
         // Create new Planet
-        PlanetDTO oldPlanetDTO = PlanetDTOFake.createWithoutProbe();
-        oldPlanetDTO.setName("PlanetInit");
-        String json = new ObjectMapper().writeValueAsString(oldPlanetDTO);
-
-        mvc
-            .perform(MockMvcRequestBuilders
-                .post(this.path)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(json))
-            .andExpect(status().isCreated());
+        Planet planetSaved = this.createPlanet();
 
         // Exec
         PlanetDTO planetUpdateDTO = PlanetDTOFake.create();
@@ -482,14 +411,15 @@ public class PlanetControllerTest {
         String jsonUpdate = new ObjectMapper().writeValueAsString(planetUpdateDTO);
 
         MockHttpServletRequestBuilder requestUpdate = MockMvcRequestBuilders
-                .put(this.path.concat("/" + 1L))
+                .put(this.path.concat("/" + planetSaved.getId()))
+                .header("Authorization", this.token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(jsonUpdate);
 
         mvc
-            .perform(requestUpdate)
-            .andExpect(status().isBadRequest());
+                .perform(requestUpdate)
+                .andExpect(status().isBadRequest());
     }
 
 

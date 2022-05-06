@@ -8,8 +8,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import java.sql.Timestamp;
-
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Default.REQUIRED_FIELD;
 import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.Planet.*;
 

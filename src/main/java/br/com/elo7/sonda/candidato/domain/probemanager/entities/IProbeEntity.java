@@ -8,10 +8,14 @@ public interface IProbeEntity {
     void applyCommandToProbe(char command, IPlanetEntity planetEntity);
 
     void setX(int x);
+
     int getX();
+
     int getY();
+
     char getDirection();
 
     void setId(Long id);
+
     Long getId();
 }

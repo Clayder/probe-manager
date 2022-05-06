@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public abstract class AbstractCoreModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Timestamp createdAt;
     private Timestamp updatedAt;

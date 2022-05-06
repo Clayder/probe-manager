@@ -1,7 +1,6 @@
 package br.com.elo7.sonda.candidato.fakes.dto;
 
 import br.com.elo7.sonda.candidato.api.dto.planet.PlanetDTO;
-import br.com.elo7.sonda.candidato.api.dto.planet.PlanetSchemaDTO;
 
 public abstract class PlanetDTOFake {
 

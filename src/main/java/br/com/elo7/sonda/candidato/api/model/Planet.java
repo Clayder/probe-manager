@@ -19,9 +19,18 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table
-public class Planet extends AbstractCoreModel {
+public class Planet {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private Timestamp deletedAt;
 
     @NotEmpty(message = REQUIRED_FIELD)
     @Length(min = NAME_SIZE_MIN, max = NAME_SIZE_MAX, message = NAME_LENGTH_FIELD)
@@ -40,12 +49,6 @@ public class Planet extends AbstractCoreModel {
     @OneToMany(mappedBy = "planet")
     private List<Probe> probes = new ArrayList<>();
 
-    @Builder
-    public Planet(Long id, Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt, String name, Integer width, Integer height, List<Probe> probes) {
-        super(id, createdAt, updatedAt, deletedAt);
-        this.name = name;
-        this.width = width;
-        this.height = height;
-        this.probes = probes;
-    }
+
+
 }

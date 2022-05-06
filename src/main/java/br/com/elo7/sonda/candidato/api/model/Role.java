@@ -17,7 +17,7 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.MessageError.
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = REQUIRED_FIELD)

@@ -18,6 +18,11 @@ public interface IConstants {
             String PATH = VERSION + NAME;
         }
 
+        interface Security {
+            String NAME = "/auth";
+            String PATH = VERSION + NAME;
+        }
+
         interface Message {
 
             interface DefaultHttp {
@@ -66,8 +71,11 @@ public interface IConstants {
 
         interface Planet extends Default {
             int NAME_SIZE_MIN = 2;
+            int PASSWORD_SIZE_MIN = 4;
+            int PASSWORD_SIZE_MAX = 8;
             int NAME_SIZE_MAX = 15;
             String NAME_LENGTH_FIELD = "The length must be between " + NAME_SIZE_MIN + " and " + NAME_SIZE_MAX + " characters.";
+            String PASSWORD_LENGTH_FIELD = "The length must be between " + PASSWORD_SIZE_MIN + " and " + PASSWORD_SIZE_MAX + " characters.";
 
         }
     }

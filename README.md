@@ -36,8 +36,16 @@ A orientação da sonda dentro do plano cartesiano usa uma rosa dos ventos como 
  4. **Swagger** 
  5. **Flyway**: Para criação das "migrations" do banco de dados
  6. **Spring Security**
- 7. **JUnit** 
- 8. **Postman**
+ 7. **Postman** 
+ 8. **JUnit**
+
+
+# :alien: Testes
+
+Esse projeto foi desenvolvido utilizando testes de integração e de unidade. 
+Na camada **controller** e **repository** foi implementado teste de integração com o banco de dados.
+
+![Peek 06-05-2022 18-222](https://user-images.githubusercontent.com/8002128/167218389-73b01c98-7473-4634-bc47-fe84e22bcf11.gif)
 
 # :open_file_folder: Organização do projeto
 

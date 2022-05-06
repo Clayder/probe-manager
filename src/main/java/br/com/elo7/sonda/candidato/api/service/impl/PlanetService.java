@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class PlanetService implements IPlanetService {
@@ -26,6 +28,8 @@ public class PlanetService implements IPlanetService {
     private ModelMapper modelMapper;
 
     private IProbeService probeService;
+
+    private static Logger logger = LoggerFactory.getLogger(PlanetService.class);
 
     public PlanetService(IPlanetRepository planetRepository, ModelMapper modelMapper, IProbeService probeService) {
         this.planetRepository = planetRepository;
@@ -67,7 +71,7 @@ public class PlanetService implements IPlanetService {
         boolean existsPlanet = this.planetRepository.existsPlanetByName(planet.getName());
 
         if (existsPlanet) {
-            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET, logger);
         }
     }
 
@@ -75,9 +79,9 @@ public class PlanetService implements IPlanetService {
     @Override
     public Planet getById(Long id) {
         Optional<Planet> obj = planetRepository.findById(id);
-        Planet planet = obj.orElseThrow(() -> new ObjectNotFoundException(ErrorMessage.PLANET_NOT_FOUND));
+        Planet planet = obj.orElseThrow(() -> new ObjectNotFoundException(ErrorMessage.PLANET_NOT_FOUND, logger));
         if (planet.getDeletedAt() != null) {
-            throw new ObjectNotFoundException(ErrorMessage.PLANET_NOT_FOUND);
+            throw new ObjectNotFoundException(ErrorMessage.PLANET_NOT_FOUND, logger);
         }
         return planet;
     }
@@ -88,7 +92,7 @@ public class PlanetService implements IPlanetService {
         boolean existsPlanet = this.planetRepository.existsPlanetByNameAndIdNot(planet.getName(), id);
 
         if (existsPlanet) {
-            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET);
+            throw new BusinessException(ErrorMessage.DUPLICATE_PLANET, logger);
         }
 
         Planet oldPlanet = this.getById(id);

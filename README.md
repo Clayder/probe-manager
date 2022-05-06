@@ -1,21 +1,19 @@
-## Bem vindo candidato(a)!
 
-Vamos explicar como funciona o nosso desafio:
+# 1. Objetivo:
 
-Um desenvolvedor recebeu um tarefa de uma pessoa da equipe de produto. A pessoa de produto queria poder controlar sondas em outros planetas por meio de comandos. Para explicar o funcionamento do produto, o seguinte exemplo foi escrito em um pedaço de papel:
+O objetivo do projeto é criar um simulador, para poder controlar sondas em outros planetas por meio de comandos.
 
-### Explicação da necessidade:
-```
+## Explicação da necessidade:
+
 Tamanho da área do planeta : 5x5
 
-Posição de pouso da sonda 1: x=1, y=2 apontando para Norte
-Sequencia de comandos: LMLMLMLMM
-Posição final da sonda: x=1 y=3 apontando para Norte
+Posição de pouso da sonda 1: **x=1, y=2** apontando para Norte
+Sequencia de comandos: `LMLMLMLMM`
+Posição final da sonda: **x=1 y=3** apontando para Norte
 
-Posição de pouso da sonda 2: x=3, y=3 apontando para Leste
-Sequencia de comandos: MMRMMRMRRML
-Posição final da sonda: x=5 y=1 apontando para Norte
-```
+Posição de pouso da sonda 2: **x=3, y=3** apontando para Leste
+Sequencia de comandos: `MMRMMRMRRML`
+Posição final da sonda: **x=5 y=1** apontando para Norte
 
 ### Detalhes sobre o funcionamento acima:
 
@@ -30,53 +28,91 @@ A orientação da sonda dentro do plano cartesiano usa uma rosa dos ventos como 
 
 ![rosa dos ventos](http://i.imgur.com/li8Ae5L.png "Rosa dos Ventos")
 
+# 2. Tecnologias utilizadas
 
-## O desafio
+ 1. **Spring Boot**
+ 2. **MySQL**
+ 3. **Docker**
+ 4. **Swagger** 
+ 5. **Flyway**: Para criação das "migrations" do banco de dados
+ 6. **Spring Security**
+ 7. **JUnit** 
+ 8. **Postman**
 
-### Regra de negócios:
+# 3. Organização do projeto
 
-- [ ] Primeiramente, **antes de olhar o código** pense quais comportamentos fazem sentido para dar suporte *a várias sondas pousando em um mesmo planeta com uma superfície limitada (podendo haver vários planetas)*. Considere que as sondas possuem combustível infinito e sempre estão disponíveis para receber ordens de movimento.
+![image](https://user-images.githubusercontent.com/8002128/167206148-96577fc3-05e9-4906-a26c-70e346b6c3b5.png)
 
-Essa aplicação foi implementada por um desenvolvedor não muito experiente. O código está funcional e com certa cobertura de testes automatizados mas não necessariamente está seguindo boas práticas. Verifique a implementação sugerida nesse repositório e verifique se:
+## Principais arquivos/diretórios
 
-- [ ] o código da aplicação dá suporte aos comportamentos pensados no primeiro item
-- [ ] a API da aplicação dá suporte aos comportamentos pensados no primeiro item
+ 1. **api**: Todas as funcionalidades referente a API da aplicação.
+ 2. **core** : Núcleo da aplicação, utilizado para reúso de código.
+ 3. **domain**: Camada utilizada para implementação das regras de negocio, o seu principal objetivo é ser independente de framework.
+ 4. **db.migration**: Onde fica armazenado os arquivos de migrations que são executados pelo Flyway para criar o banco de dados. 
+ 5. **test**: Local onde fica armazenado os testes da aplicação.
+ 6. **test.api.controller**: Teste de integração utilizando o banco de testes.
+ 7. **docker-compose.yaml**: Utilizado para criar o banco de dados de desenvolvimento e testes.
 
-### Crie a sua melhoria sobre a solução proposta aqui:
+# 4. Banco de dados
 
-- [ ] Crie um repositório e faça o push dessa solução para seu novo repo
-- [ ] De preferência usando pequenos commits procure corrigir os problemas levantados acima. Para fins de código e divisão de responsabilidades em códigos Orientados a Objeto seguem dois links que exprimem alguns guidelines do Elo7: 
+## Modelagem
 
-- https://www.alura.com.br/artigos/nao-aprender-oo-getters-e-setters
-- https://www.alura.com.br/artigos/o-que-e-modelo-anemico-e-por-que-fugir-dele
+![image](https://user-images.githubusercontent.com/8002128/167210855-f9b7c2af-05a7-457f-b966-764025a9a481.png)
 
-Obs: fique à vontade para alterar todas as classes, pacotes etc. **Aproveite apenas o que achar que faz sentido!**
+## Banco de dados
 
-### Para pretensões senior APENAS:
+Os bancos de **desenvolvimento** e **testes** podem ser utilizados através de contêiner docker .
 
-No caso da pretenção estar no patamar de senior nós requisitamos alguns desafios extras:
+Para subir o banco é só executar o comando: `docker-compose up --build`
 
-- [ ] O teste possui um mecanismo de persistência em memória, altere para uma persistência utilizando um ou mais banco de dados de forma a armazenar as informações de planetas e sondas e buscá-las ou alterá-las de maneira eficiente;
-- [ ] Se preocupe com uma maneira de documentar a api do sistema web;
-- [ ] Tenha em mente escalabilidade, disponibilidade e performance em sua solução. Apesar do problema proposto ser bem didático procure tratar a solução como um sistema de produção real.
+**Obs:** Em toda execução dos testes de integração o banco de teste é apagado.
 
-Obs: Se você está em dúvida se a sua pretenção é senior ou não procure nossa tech recruiter sobre o assunto, ela saberá responder. Caso sua pretenção seja junior ou pleno você pode encarar os pontos acima como opcionais para demonstrar seu conhecimento e potencializar o valor inicial de nossa oferta, mas se a sua pretenção é junior ou pleno os pontos acima NÃO SÃO OBRIGATÓRIOS para a entrega da solução.
+**Credenciais do banco de desenvolvimento:** 
 
-## Informações sobre o projeto
+**Porta**: 3306
 
-### Como subir o projeto
+    MYSQL_DATABASE: 'probe_manager'  
+	MYSQL_USER: 'user'  
+	MYSQL_PASSWORD: 'password'  
+	MYSQL_ROOT_PASSWORD: 'password'
 
-- Certifique-se que a porta 8080 esteja desocupada;
-- Certifique-se de que você possui o maven instalado localmente;
-- Certifique-se de que você está na raiz do projeto;
-- Rode o `./mvnw spring-boot:run`
+**Credenciais do banco de testes:** 
 
-Com isso as dependências serão baixadas e a API subirá na porta `8080`;
+**Porta**: 3307
 
-### Fazendo uma requisição
+    MYSQL_DATABASE: 'probe_manager_test'  
+	MYSQL_USER: 'user'  
+	MYSQL_PASSWORD: 'password'  
+	MYSQL_ROOT_PASSWORD: 'password'
 
-- Aqui você pode usar o Postman, por exemplo, ou o curl como abaixo:
+# 5. Documentação da API
 
-```bash
-curl -X POST http://localhost:8080/planetEntity-with-probeEntities -H 'Content-Type: application/json' -d '{"width":10,"height":10,"probeEntities":[{"x":1,"y":2,"direction":"N","commands": "LMLMLMLMM"},{"x":3,"y":3,"direction":"E","commands": "MMRMMRMRRM"}]}'
-```
+Toda a API foi documentada utilizando o Swagger.
+Para acessar a documentação, é só acessar a URL [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
+
+
+![image](https://user-images.githubusercontent.com/8002128/167207909-c77ee9a2-e398-41ba-93fb-c8a5b1e37572.png)
+
+
+# 6. Autenticação na API
+
+## Dados do usuário default
+
+  **email**: admin@gmail.com,
+  **password**: 123456
+
+![image](https://user-images.githubusercontent.com/8002128/167209153-524f516e-c66f-4e33-8ea9-605bb410e198.png)
+
+
+## Exemplo de uso
+
+Após a autenticação é só passar o token, nos cabeçalhos das requisições.
+
+![image](https://user-images.githubusercontent.com/8002128/167209840-bb58c8fd-df2d-4e5d-aac0-c7d030358a34.png)
+
+**Utilização no Swagger**
+
+![image](https://user-images.githubusercontent.com/8002128/167209995-c3ae2dab-8d42-42de-a38a-6f1bbacb8032.png)
+
+
+

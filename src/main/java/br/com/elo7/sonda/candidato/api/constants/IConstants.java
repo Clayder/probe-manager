@@ -26,6 +26,7 @@ public interface IConstants {
         interface Message {
 
             interface DefaultHttp {
+                String DESCRIPTION_500 = "Erro interno.";
                 String DESCRIPTION_400 = "Erro de validação.";
                 String DESCRIPTION_422 = "Ocorreu erro com a regra de negócio.";
                 String DESCRIPTION_404 = "Registro não encontrado.";
@@ -57,6 +58,10 @@ public interface IConstants {
                 String SUMMARY_LIST = "Listar as sondas.";
 
                 String SUMMARY_GET = "Retornar uma sonda.";
+            }
+
+            interface Security extends IConstants.Controller.Message.DefaultHttp {
+                String SUMMARY_AUTHENTICATE = "Gerar token JWT";
             }
 
         }

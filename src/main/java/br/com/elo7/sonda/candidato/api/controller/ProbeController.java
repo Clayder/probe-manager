@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,15 @@ import static br.com.elo7.sonda.candidato.api.constants.IConstants.Controller.Pr
 @RestController
 @RequestMapping(PATH)
 @Tag(name = "Sonda")
+@ApiResponses(
+        value = {
+                @ApiResponse(responseCode = "500", description = DESCRIPTION_500, content = {
+                        @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = StandardError.class))
+                })
+        }
+)
+@SecurityRequirement(name = "bearerAuth")
 public class ProbeController {
 
     private IProbeService probeService;

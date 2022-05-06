@@ -49,7 +49,7 @@ Na camada **controller** e **repository** foi implementado teste de integração
 
 # :open_file_folder: Organização do projeto
 
-![image](https://user-images.githubusercontent.com/8002128/167206148-96577fc3-05e9-4906-a26c-70e346b6c3b5.png)
+![image](https://user-images.githubusercontent.com/8002128/167219157-de91573b-bc30-40eb-a5ee-77ddbadfcbdc.png)
 
 ## Principais arquivos/diretórios
 
